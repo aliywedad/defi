@@ -37,7 +37,7 @@ const [x,setx]=useState(true)
                     <li className="menu-item">
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
-                            <Link to='/' className="menu-link" style={{ textDecoration: 'none' }}>
+                            <Link to='/Etudiant' className="menu-link" style={{ textDecoration: 'none' }}>
                             <div data-i18n="Basic">Etudiants</div>
                             </Link>
                         </a>

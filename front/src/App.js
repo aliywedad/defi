@@ -26,7 +26,8 @@ function App() {
     {/* <SidebarExample prop={<Etuduent/>}/> */}
     <BrowserRouter>
     <Routes>
-    <Route path="/" element={<EtuduentPage />} /> 
+    <Route path="/" element={<Login/>} /> 
+    <Route path="/Etudiant" element={<EtuduentPage />} /> 
     <Route path="/Jery" element={<JeryPage />} /> 
     <Route path="/Admin" element={<AdminPage />} /> 
     <Route path="/CreeEquipe" element={<CreeEquipePage />} /> 
