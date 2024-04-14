@@ -71,7 +71,7 @@ return(
                             <td className='p-4'>{item.email}</td>
                             <td className='p-4'> 
                             <a className='m-2' onClick={()=>{update(item.id)}} > modifier </a>
-                            <a className='m-2'onClick={()=>{delelt(item.id)}} >  suprimer</a>
+                            <a className='m-2'onClick={()=>{delet(item.id)}} >  suprimer</a>
                             </td>
                         </tr>
                        ))}
