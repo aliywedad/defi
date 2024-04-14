@@ -388,7 +388,167 @@ def create_defi(request):
         return Response('200')
     except:
         print("error")
-    # Further processing and saving to the database
-    # ...
-   
+
     return Response({'message': 'Défi created successfully', 'file_path': relative_file_path})
+
+# class Équipe(models.Model):
+#     nomEquipe = models.CharField(max_length=255)
+#     leadID = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='lead_teams')
+#     adjointID = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='adjoint_teams')
+#     nombreMembres = models.IntegerField()
+# print(Etudiant.objects.get(id=11))
+# e=Équipe.objects.create(nomEquipe="404",leadID=Etudiant.objects.get(id=11),adjointID=Etudiant.objects.get(id=11),nombreMembres=2)
+@api_view(['POST'])
+def rander(request):
+    # Access form data including files
+    date = request.POST.get('date')
+    GIT = request.POST.get('GIT')
+    d = request.POST.get('DEFI')
+    e = request.POST.get('Equipe')
+    DEFI=Défi.objects.get(id=e)
+    equipe=Équipe.objects.get(id=e)
+
+    print("*******************************************************************************************888")
+    print(date,GIT,DEFI,equipe)
+ 
+    uploaded_file = request.FILES['file']
+
+    file_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'files')
+    if not os.path.exists(file_directory):
+        os.makedirs(file_directory)
+
+    # Construct the relative file path
+    relative_file_path = os.path.join('files', uploaded_file.name)
+
+    # Save the uploaded file with the relative path
+    file_path = os.path.join(file_directory, uploaded_file.name)
+    with open(file_path, 'wb+') as destination:
+        for chunk in uploaded_file.chunks():
+            destination.write(chunk)
+    print('*************************************************************************')
+    print(uploaded_file.name)
+    print(file_path)
+    #     équipe = models.ForeignKey(Équipe, on_delete=models.CASCADE)
+    # défi = models.ForeignKey(Défi, on_delete=models.CASCADE)
+    # lienGit = models.CharField(max_length=255)
+    # dateSoumission = models.DateTimeField()
+    # status = models.CharField(max_length=7, choices=STATUS_CHOICES)
+    # fileNmae = models.TextField
+    # filePath = models.TextField
+    # try:
+    defi_instance = Soumission.objects.create(
+        équipe=equipe,
+        défi=DEFI,
+        status="soumis",
+        lienGit=date,
+        dateSoumission='2024-04-30',
+        # fileName=uploaded_file.name,
+        # filePath= file_path,
+        )
+    print("*****************************************************************************************************************8")
+    print(file_path,uploaded_file.name)
+    return Response('200')
+    # except:
+    #     print("error")
+
+    return Response({'message': 'Défi created successfully', 'file_path': relative_file_path})
+
+
+@api_view(['POST'])
+def update_etudiant(request):
+    if request.method == 'POST':
+        # Extract the updated data from the request body
+        data = request.data
+        etudiant_id = data.get('id')
+        
+        try:
+            # Retrieve the etudiant object from the database
+            etudiant = Etudiant.objects.get(id=etudiant_id)
+            
+            # Update the etudiant object with the new data
+            etudiant.nom = data.get('nom')
+            etudiant.prenom = data.get('prenom')
+            etudiant.email = data.get('email')
+            etudiant.specialite = data.get('specialite')
+            etudiant.niveau = data.get('niveau')
+            
+            # Save the updated etudiant object
+            etudiant.save()
+            
+            # Return a success response
+            return Response({'message': 'Etudiant updated successfully'})
+        
+        except Etudiant.DoesNotExist:
+            # Return an error response if the etudiant does not exist
+            return Response({'error': 'Etudiant not found'}, status=404)
+    
+    else:
+        # Return a method not allowed response for other HTTP methods
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+
+
+@api_view(['POST'])
+def update_jury(request):
+    if request.method == 'POST':
+        # Extract the updated data from the request body
+        data = request.data
+        etudiant_id = data.get('id')
+        
+        try:
+            # Retrieve the etudiant object from the database
+            etudiant = Jery.objects.get(id=etudiant_id)
+            
+            # Update the etudiant object with the new data
+            etudiant.nom = data.get('nom')
+            etudiant.prenom = data.get('prenom')
+            etudiant.email = data.get('email')
+ 
+            
+            # Save the updated etudiant object
+            etudiant.save()
+            
+            # Return a success response
+            return Response({'message': 'Etudiant updated successfully'})
+        
+        except Etudiant.DoesNotExist:
+            # Return an error response if the etudiant does not exist
+            return Response({'error': 'Etudiant not found'}, status=404)
+    
+    else:
+        # Return a method not allowed response for other HTTP methods
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+@api_view(['POST'])
+def update_Admin(request):
+    if request.method == 'POST':
+        # Extract the updated data from the request body
+        data = request.data
+        etudiant_id = data.get('id')
+        
+        try:
+            # Retrieve the etudiant object from the database
+            etudiant = administrater.objects.get(id=etudiant_id)
+            
+            # Update the etudiant object with the new data
+            etudiant.nom = data.get('nom')
+            etudiant.prenom = data.get('prenom')
+            etudiant.email = data.get('email')
+ 
+            
+            # Save the updated etudiant object
+            etudiant.save()
+            
+            # Return a success response
+            return Response({'message': 'Etudiant updated successfully'})
+        
+        except Etudiant.DoesNotExist:
+            # Return an error response if the etudiant does not exist
+            return Response({'error': 'Etudiant not found'}, status=404)
+    
+    else:
+        # Return a method not allowed response for other HTTP methods
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+
+
