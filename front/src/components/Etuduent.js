@@ -84,7 +84,7 @@ return(    <div className="container-xxl flex-grow-1 container-p-y">
                             <td className='p-4'>{item.spécialité}</td>
                             <td className='p-4'>{item.niveau}</td>
                             <td className='p-4'> 
-                            <a className='m-2' onClick={() => { updateEtudiant(item.id) }}>modifier</a>
+                            <a className='m-2'>modifier</a>
                             <a className='m-2'onClick={()=>{delet(item.id)}} >  suprimer</a>
                             </td>
                         </tr>
