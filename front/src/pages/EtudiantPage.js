@@ -5,7 +5,9 @@ import Sidebar from "../components/Sidebar";
 
 export default function EtuduentPage(){
     return(
-        <Sidebar prop={<Etuduent/>}/>
+        <h1>hello</h1>
+            
+
 
     )
 }

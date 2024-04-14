@@ -5,7 +5,7 @@ import Sidebar from "../components/Sidebar";
 
 export default function JeryPage(){
     return(
-        <Sidebar prop={<Jery/>}/>
+        <h1>hello</h1>
 
     )
 }

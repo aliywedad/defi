@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
 
 import React, { useState } from 'react';
+import Admin from './Admin';
+import Jery from './Jery';
+import Etuduent from './Etuduent';
 
-function Sidebar({prop}) {
-const [x,setx]=useState(true)
+function Sidebar({role}) {
+  
+  const [x,setx]=useState(true)
+  const [render,setrender]=useState('Etudiant')
 
   return (
     <div className="layout-wrapper layout-content-navbar">
@@ -33,28 +38,23 @@ const [x,setx]=useState(true)
                       </a>
                   </li>
                     <li className="menu-header small text-uppercase"><span className="menu-header-text">Gestion</span></li>
-                    <li className="menu-item">
+                    <li className="menu-item" onClick={()=>{setrender('Etudiant')}}>
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
-                            <Link to='/Etudiant' className="menu-link" style={{ textDecoration: 'none' }}>
                             <div data-i18n="Basic">Etudiants</div>
-                            </Link>
                         </a>
                     </li>
-                    <li className="menu-item">
+                    <li className="menu-item" onClick={()=>{setrender('Jery')}}>
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
-                            <Link to={`/Jery`}className="menu-link" style={{ textDecoration: 'none' }}>
-                            <div data-i18n="Basic">Jery</div>
-                            </Link>
+                            <div data-i18n="Basic">Jury</div>
                         </a>
                     </li>
-                    <li className="menu-item">
+                    <li className="menu-item" onClick={()=>{setrender('Admin')}}>
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
-                            <Link to={`/Admin`}className="menu-link" style={{ textDecoration: 'none' }}>
                             <div data-i18n="Basic">Admin</div>
-                            </Link>
+
                         </a>
                     </li>
 
@@ -129,7 +129,11 @@ const [x,setx]=useState(true)
                 </nav>
 
                 <div class={`content-wrapper  sm: ${x?'  ' : 'd-none'}`}>
-           {prop}
+                {render==="Admin" && <Admin/>}
+                {render==="Jery" && <Jery/>}
+                {render==="Etudiant" && <Etuduent/>}
+
+
     
               </div> 
 
