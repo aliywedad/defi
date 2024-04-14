@@ -1,50 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate} from 'react-router-dom';
-
+import axios from 'axios';
 function Login() {
-  const [donner, setDonner] = useState([]);
-  const [email, setEmail] = useState('');
+   const [email, setEmail] = useState('');
   const [Loggedin, setLoggedin] = useState(false);
-  const [Role, setRole] = useState('');
+  // const [Role, setRole] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const[user,setuser]=useState({"email":"","role":""})
 
-  useEffect(() => {
-    const data = [
-      { "id": 1, "role": "Admin", "pwd": "admin", "login": "22086@supnum.mr" },
-      { "id": 2, "role": "Jery", "pwd": "jery", "login": "22086@supnum.mr" },
-      { "id": 3, "role": "Etudiant", "pwd": "etudiant", "login": "22086@supnum.mr" },
-      { "id": 4, "role": "Jery", "pwd": "med", "1234": "22086@supnum.mr" },
-      { "id": 5, "role": "Etudiant", "pwd": "med", "12345": "22086@supnum.mr" },
-      { "id": 6, "role": "Jery", "pwd": "med", "12346": "22086@supnum.mr" },
-      { "id": 7, "role": "Etudiant", "pwd": "med", "12347": "22086@supnum.mr" }
-    ];
-    setDonner(data);
-  }, []);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = donner.find(item => item.login === email && item.pwd === password);
-    if (user) {
-      // If user is found, you can redirect to the appropriate page based on the user's role
-      console.log('Logged in successfully:', user);
-      // Example: Redirect to admin page if user's role is 'Admin'
-      if (user.role === 'Admin') {
-        console.log('Admin')
-        navigate('/admin');
+  
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/auth/', { login: email, pwd: password });
+  
+      console.log(response.data); // Log the response data
+  
+      if (response.status === 200) {
+        console.log('Success');
+        const data = response.data;
+        console.log(data.role)
+         if (data.role==='organisateur') {
+          console.log('Admin')
+          navigate('/admin');
+  
+        } else if (data.role==='jury') {
+          console.log('Jery')
+          navigate('/Jery');
+  
+        } else if (data.role==='étudiant') {
+          console.log('Etudiant')
+          navigate('/Etudiant');
+  
+        }
 
-      } else if (user.role === 'Jery') {
-        console.log('Jery')
-        navigate('/Jery');
 
-      } else if (user.role === 'Etudiant') {
-        console.log('Etudiant')
-        navigate('/Etudiant');
 
+
+       } else {
+        console.error('Error');
+        setError('Invalid login or password');
       }
-    } else {
-      setError('Invalid login or password');
+    } catch (error) {
+      console.error('Error submitting the form', error);
+      setError('Network error or server issue');
     }
   };
 

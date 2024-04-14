@@ -1,67 +1,85 @@
-
 import React from 'react';
+import axios from 'axios';
 
-export default function CreeDefi(){
+export default function CreeDefi({setrender}) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-return(
+    // Get form data
+    const formData = new FormData(e.target);
 
-    <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light">cree du Défi</span></h4>
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/create_defi/', formData);
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card mb-4">
-          <h5 class="card-header">Détails du Défi</h5>
-    
-          <hr class="my-0" />
-          <div class="card-body">
-            <form id="formAccountSettings" method="post" action="{% url 'create_defi' %}" enctype="multipart/form-data">
-              <div class="row">
-                <div class="mb-3 col-md-12">
-                  <label for="titre" class="form-label">Libellé</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="titre"
-                    name="titre"
-                    autofocus required/>
-                </div>
-                <div class="mb-3 col-md-12">
-                  <label for="date_debut" class="form-label">Date de début</label>
-                  <input class="form-control" type="date" name="date_debut" id="date_debut"  required/>
-                </div>
-                <div class="mb-3 col-md-12">
-                  <label for="date_fin" class="form-label">Date de fin</label>
-                  <input class="form-control" type="date" name="date_fin" id="date_fin"  required/>
-                </div>
-                <div class="mb-3 col-md-12">
-                  <label for="desc" class="form-label">Sélectionnez un ou plusieurs fichier(s)</label>
-                  <input class="form-control" type="file" name="file" id="file" required />
-                </div>
-    
-                <div class="mb-3 col-md-12">
-                  <label for="desc" class="form-label">Description</label>
-                  <textarea class="form-control" name="desc" id="desc" cols="20" rows="5" required></textarea>
-                </div>
-                <div class="mb-3 col-md-12">
+      console.log(response.data); // Log the response data
+
+      if (response.status === 200) {
+        console.log('Data sent successfully');
+        setrender('ListeDefis')
+        // Handle success (e.g., show a success message)
+      } else {
+        console.error('Error sending data');
+        // Handle error response from the server
+      }
+    } catch (error) {
+      console.error('Error submitting the form', error);
+      // Handle network errors or Axios-related errors
+    }
+  };
+
+  return (
+    <div className="container-xxl flex-grow-1 container-p-y">
+      <h4 className="py-3 mb-4"><span className="text-muted fw-light">Création du Défi</span></h4>
+
+      <div className="row">
+        <div className="col-md-12">
+          <div className="card mb-4">
+            <h5 className="card-header">Détails du Défi</h5>
+
+            <hr className="my-0" />
+            <div className="card-body">
+              <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <div className="row">
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="titre" className="form-label">Libellé</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      id="titre"
+                      name="titre"
+                      autoFocus
+                      required
+                    />
+                  </div>
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="date_debut" className="form-label">Date de début</label>
+                    <input className="form-control" type="date" name="date_debut" id="date_debut" required />
+                  </div>
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="date_fin" className="form-label">Date de fin</label>
+                    <input className="form-control" type="date" name="date_fin" id="date_fin" required />
+                  </div>
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="desc" className="form-label">Sélectionnez un ou plusieurs fichier(s)</label>
+                    <input className="form-control" type="file" name="file" id="file" required />
+                  </div>
+                  <div className="mb-3 col-md-12">
+                    <label htmlFor="desc" className="form-label">Description</label>
+                    <textarea className="form-control" name="desc" id="desc" cols="20" rows="5" required></textarea>
+                  </div>
+                  <div className="mb-3 col-md-12">
                     <input type="checkbox" id="notification" name="notification" /> envoi le notification
                   </div>
-              </div>
-              <div class="mt-2">
-                <button type="submit" class="btn btn-primary me-2">Enregistrer</button>
-                <button type="reset" class="btn btn-outline-secondary">Annuler</button>
-
-
-              </div>
-            </form>
+                </div>
+                <div className="mt-2">
+                  <button type="submit" className="btn btn-primary me-2">Enregistrer</button>
+                  <button type="reset" className="btn btn-outline-secondary">Annuler</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    
-  </div>
-
-)
-
-
+  );
 }
