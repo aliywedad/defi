@@ -33,6 +33,11 @@ def list_Etudiant(request):
     serializer = EtudiantSerializer(etudiant, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def list_Utilisateur(request):
+    utilisateur = Utilisateur.objects.all()
+    serializer = UtilisateurSerializer(utilisateur, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['POST'])
