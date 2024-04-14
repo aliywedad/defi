@@ -140,7 +140,7 @@ function JuryPage({ prop }) {
                 </nav>
 
                 <div class={`content-wrapper  sm: ${x?'  ' : 'd-none'}`}>
-            {render === "CreeDefi" && <CreeDefi />}
+            {render === "CreeDefi" && <CreeDefi setrender={setrender} />}
             {render === "ListeDefis" && <ListeDefis />}
             {render === "ListeEquipes" && <ListeEquipes />}
             {render === "Noter" && <Noter />}

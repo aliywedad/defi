@@ -1,0 +1,36 @@
+[{
+  "_id": {
+    "$oid": "661c848178870f710f371f34"
+  },
+  "id": 1,
+  "email": "22086@supnum.mr",
+  "motDePasse": "admin",
+  "role": "étudiant"
+},
+{
+  "_id": {
+    "$oid": "661c84ce1c0a2dad52ac7752"
+  },
+  "id": 4,
+  "email": "jery@supnum.mr",
+  "motDePasse": "jery",
+  "role": "jury"
+},
+{
+  "_id": {
+    "$oid": "661c84fcb76f85dff89118e1"
+  },
+  "id": 5,
+  "email": "admin@supnum.mr",
+  "motDePasse": "admin",
+  "role": "organisateur"
+},
+{
+  "_id": {
+    "$oid": "661c8518f5e234ccfe9f2b1e"
+  },
+  "id": 6,
+  "email": "etudiant@supnum.mr",
+  "motDePasse": "etudiant",
+  "role": "étudiant"
+}]

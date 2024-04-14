@@ -24,7 +24,7 @@ import random
 # Etudiant.objects.create(nom='sidi',prénom='m4',email='m3@s.n',spécialité='DSI',niveau='L1',)
 # Jery.objects.create(nom='aliy',prénom='m1',email='m5@s.n')
 # Jery.objects.create(nom='sidi',prénom='m2',email='m6@s.n')
-# Jery.objects.create(nom='med',prénom='m3',email='m7@s.n')
+# Utilisateur.objects.create(email='etudiant@supnum.mr',motDePasse='etudiant',role='étudiant')
 
 @api_view(['GET'])
 def list_Etudiant(request):
@@ -32,10 +32,41 @@ def list_Etudiant(request):
     serializer = EtudiantSerializer(etudiant, many=True)
     return Response(serializer.data)
 
+
+
+@api_view(['POST'])
+def auth(request):
+    login = request.data.get("login")
+    pwd = request.data.get("pwd")
+
+    try:
+        user = Utilisateur.objects.get(email=login)
+        
+        # Check if user exists and password matches
+        if user and user.motDePasse == pwd:
+            role = user.role
+            # Return the role in the response
+            return Response({'role': role}, status=200)
+        else:
+            # If user does not exist or password does not match, return unauthorized
+            return Response("Invalid credentials", status=401)
+    except Utilisateur.DoesNotExist:
+        # If user does not exist, return not found
+        return Response("User does not exist", status=404)
+    except Exception as e:
+        # Handle any other unexpected errors
+        return Response(str(e), status=500)
+
 @api_view(['GET'])
 def list_Admin(request):
     admin = administrater.objects.all()
     serializer = administraterSerializer(admin, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def list_defi(request):
+    defi = Défi.objects.all()
+    serializer = DéfiSerializer(defi, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -224,9 +255,9 @@ def add_Jury(request):
             )
             
             # Return a JSON response indicating success
-            return Response({'message': 'administrater has error'})
+            return Response({'message': 'jery has created succefuly'})
         except:
-            return Response({'message': 'administrater has error'})
+            return Response({'message': 'jery has error'})
 
     
     else:
@@ -265,39 +296,54 @@ def delet_Jery(request):
         return Response('200')
     except:
         return Response('400')
-    
-    
-    
-@api_view(['PUT'])
-def update_etudiant(request, etudiant_id):
-    if request.method == 'PUT':
-        # Get the existing Etudiant object by ID
-        try:
-            etudiant = Etudiant.objects.get(id=etudiant_id)
-        except Etudiant.DoesNotExist:
-            return Response({'error': 'Etudiant not found'}, status=404)
-        
-        # Parse the JSON data from the request body
-        data = json.loads(request.body)
-        
-        # Update the fields if they exist in the request data
-        if 'nom' in data:
-            etudiant.nom = data['nom']
-        if 'prenom' in data:
-            etudiant.prénom = data['prenom']
-        if 'email' in data:
-            etudiant.email = data['email']
-        if 'specialite' in data:
-            etudiant.spécialité = data['specialite']
-        if 'niveau' in data:
-            etudiant.niveau = data['niveau']
-        
-        # Save the updated Etudiant object
-        etudiant.save()
-        
-        # Return a JSON response indicating success
-        return Response({'message': 'Etudiant updated successfully'})
-    
-    else:
-        # Return a JSON response with an error message if the request method is not PUT
-        return Response({'error': 'Only PUT requests are allowed for this endpoint'}, status=405)
+
+
+import os
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['POST'])
+def create_defi(request):
+    # Access form data including files
+    titre = request.POST.get('titre')
+    date_debut = request.POST.get('date_debut')
+    date_fin = request.POST.get('date_fin')
+    desc = request.POST.get('desc')
+    notification = request.POST.get('notification', False)
+      # Checkbox value
+
+    # Access uploaded file
+    uploaded_file = request.FILES['file']
+
+    # Create the directory if it doesn't exist
+    file_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'files')
+    if not os.path.exists(file_directory):
+        os.makedirs(file_directory)
+
+    # Construct the relative file path
+    relative_file_path = os.path.join('files', uploaded_file.name)
+
+    # Save the uploaded file with the relative path
+    file_path = os.path.join(file_directory, uploaded_file.name)
+    with open(file_path, 'wb+') as destination:
+        for chunk in uploaded_file.chunks():
+            destination.write(chunk)
+    print('*************************************************************************')
+    print(uploaded_file.name)
+    print(file_path)
+    try:
+        defi_instance = Défi.objects.create(
+            titre='Sample Title',
+            desc='Sample Description',
+            date_debut='2024-04-15',
+            date_fin='2024-04-30',
+            fileName=uploaded_file.name,
+            filePath= file_path,
+            )
+        return Response('200')
+    except:
+        print("error")
+    # Further processing and saving to the database
+    # ...
+   
+    return Response({'message': 'Défi created successfully', 'file_path': relative_file_path})

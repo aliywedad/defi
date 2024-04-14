@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  backend:
+    build: ./back
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./front
+    ports:
+      - "3000:3000"
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
