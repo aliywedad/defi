@@ -1,5 +1,6 @@
 
 import React, { useState,useEffect } from 'react';
+import axios from "axios";
 
 export default function Admin(){
 
@@ -20,9 +21,26 @@ useEffect(() => {
     setDonner(data);
   }, []);
 
-const delelt=async(id)=>{
-    console.log(id)
-}
+  const delet = async (id) => {
+    const confirmed = window.confirm('Are you sure you want to delete this item?');
+    // Check if user confirmed
+    if (confirmed) {
+      // User confirmed, proceed with deletion logic
+      // Put your deletion logic here
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/delet_Admin/',{"id":id});
+        console.log(response.data,"id = ",id)
+        if(response.data==='200'){
+          // fetchData()
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      // console.log('Item deleted');
+    } else {
+      // User canceled, do nothing or show another message
+      console.log('Deletion canceled');
+    }}
 const update=async(id)=>{
     console.log(id)
 }

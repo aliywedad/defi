@@ -26,12 +26,32 @@ useEffect(() => {
   };
   const[render,setrender]=useState('list')
 
-const delelt=async(id)=>{
-    console.log(id)
-}
+
 const update=async(id)=>{
     console.log(id)
 }
+const delet = async (id) => {
+  const confirmed = window.confirm('Are you sure you want to delete this item?');
+  // Check if user confirmed
+  if (confirmed) {
+    // User confirmed, proceed with deletion logic
+    // Put your deletion logic here
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/delet_Etudiant/',{"id":id});
+      console.log(response.data,"id = ",id)
+      if(response.data==='200'){
+        fetchData()
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    // console.log('Item deleted');
+  } else {
+    // User canceled, do nothing or show another message
+    console.log('Deletion canceled');
+  }}
+
+
 
 if(render==='add')return <Add setrender={setrender}/>
 else
@@ -63,7 +83,7 @@ return(    <div className="container-xxl flex-grow-1 container-p-y">
                             <td className='p-4'>{item.niveau}</td>
                             <td className='p-4'> 
                             <a className='m-2' onClick={()=>{update(item.id)}} > modifier </a>
-                            <a className='m-2'onClick={()=>{delelt(item.id)}} >  suprimer</a>
+                            <a className='m-2'onClick={()=>{delet(item.id)}} >  suprimer</a>
                             </td>
                         </tr>
                        ))}
