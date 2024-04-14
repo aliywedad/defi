@@ -69,10 +69,16 @@ WSGI_APPLICATION = 'back_end.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'defi4',
+        'ENFORCE_SCHEMA': False,  # Optional: set to True to enforce schema validation
+        'CLIENT': {
+            'host': 'mongodb://127.0.0.1:27017',
+        }
     }
 }
+
+
 
 
 # Password validation
