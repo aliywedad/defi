@@ -12,7 +12,6 @@ class Jery(models.Model):
 
 
 
-
 class Etudiant(models.Model):
     
     NIVEAU_CHOICES = (

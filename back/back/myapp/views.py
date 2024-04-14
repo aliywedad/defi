@@ -9,8 +9,12 @@ import json
 from rest_framework.request import Request
 import smtplib
 import random
-
-
+    # spécialité = models.CharField(max_length=255, choices=SPECIALITE_CHOICES)
+    # niveau = models.CharField(max_length=3, choices=NIVEAU_CHOICES)
+    # email = models.EmailField(unique=True)
+    # nom = models.CharField(max_length=255)
+    # prénom = models.CharField(max_length=255)
+# Etudiant.objects.create(nom='m',prénom='m',email='m@s.n',spécialité='DSI',niveau='L1',)
 @api_view(['GET'])
 def list_Etudiant(request):
     etudiant = Etudiant.objects.all()
@@ -85,19 +89,23 @@ def list_Etudiant(request):
 
 
 
+# @api_view(['POST'])
+# def create_user(request):
+#     """
+#     Create a new user.
+#     """
+#     serializer = UserSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#         return Response(serializer.data, status=201)
+#     return Response(serializer.errors, status=400)
 # # @api_view(['POST'])
-# # def create_user(request):
-# #     """
-# #     Create a new user.
-# #     """
-# #     serializer = UserSerializer(data=request.data)
-# #     if serializer.is_valid():
-# #         serializer.save()
-# #         return Response(serializer.data, status=201)
-# #     return Response(serializer.errors, status=400)
-# # # @api_view(['POST'])
 
 
+@api_view(['POST'])
+def Add_Etudiant(request):
+    id=request.data.get('id')
+    Etudiant.objects.create(nom='m',prénom='m',email='m@s.n',spécialité='DSI',niveau='L1',)
 
 
 
