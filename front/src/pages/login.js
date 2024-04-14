@@ -12,13 +12,13 @@ function Login() {
 
   useEffect(() => {
     const data = [
-      { "id": 1, "role": "Admin", "pwd": "1234", "login": "22086@supnum.mr" },
-      { "id": 2, "role": "Jery", "pwd": "1234", "login": "22086@supnum.mr" },
-      { "id": 3, "role": "Etudiant", "pwd": "1234", "login": "22086@supnum.mr" },
+      { "id": 1, "role": "Admin", "pwd": "admin", "login": "22086@supnum.mr" },
+      { "id": 2, "role": "Jery", "pwd": "jery", "login": "22086@supnum.mr" },
+      { "id": 3, "role": "Etudiant", "pwd": "etudiant", "login": "22086@supnum.mr" },
       { "id": 4, "role": "Jery", "pwd": "med", "1234": "22086@supnum.mr" },
-      { "id": 5, "role": "Etudiant", "pwd": "med", "1234": "22086@supnum.mr" },
-      { "id": 6, "role": "Jery", "pwd": "med", "1234": "22086@supnum.mr" },
-      { "id": 7, "role": "Etudiant", "pwd": "med", "1234": "22086@supnum.mr" }
+      { "id": 5, "role": "Etudiant", "pwd": "med", "12345": "22086@supnum.mr" },
+      { "id": 6, "role": "Jery", "pwd": "med", "12346": "22086@supnum.mr" },
+      { "id": 7, "role": "Etudiant", "pwd": "med", "12347": "22086@supnum.mr" }
     ];
     setDonner(data);
   }, []);
@@ -40,6 +40,8 @@ function Login() {
 
       } else if (user.role === 'Etudiant') {
         console.log('Etudiant')
+        navigate('/Etudiant');
+
       }
     } else {
       setError('Invalid login or password');

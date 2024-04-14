@@ -1,17 +1,16 @@
-import { Link } from 'react-router-dom';
-
 import React, { useState } from 'react';
-import Admin from './Admin';
-import Jery from './Jery';
-import Etuduent from './Etuduent';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import CreeDefi from '../components/CreeDefi';
+import ListeDefis from '../components/ListeDefis';
+import ListeEquipes from '../components/ListeEquipes';
+import Noter from '../components/Noter';
 
-function Sidebar({role}) {
-  
-  const [x,setx]=useState(true)
-  const [render,setrender]=useState('Etudiant')
+function JuryPage({ prop }) {
+  const [x, setx] = useState(true);
+  const [render, setrender] = useState('ListeEquipes');
 
   return (
-    <div className="layout-wrapper layout-content-navbar">
+     <div className="layout-wrapper layout-content-navbar">
         <div className="layout-container">
 
         <aside  className={`${x?' layout-menu ' : ''} menu-vertical menu bg-menu-theme`}>
@@ -22,7 +21,7 @@ function Sidebar({role}) {
                         <span className="app-brand-text demo menu-text fw-bold ms-2">S3C</span>
                     </a>
 
-                    <a href="javascript:void(0);" className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <a href="/#" className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
                         <i className="bx bx-chevron-left bx-sm align-middle" ></i>
                     </a>
                 </div>
@@ -38,26 +37,38 @@ function Sidebar({role}) {
                       </a>
                   </li>
                     <li className="menu-header small text-uppercase"><span className="menu-header-text">Gestion</span></li>
-                    <li className="menu-item" onClick={()=>{setrender('Etudiant')}}>
+                    <li className="menu-item">
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
-                            <div data-i18n="Basic">Etudiants</div>
+                            <Link  onClick={() => { setrender('ListeEquipes') }}   className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">Equipes</div>
+                            </Link>
                         </a>
                     </li>
-                    <li className="menu-item" onClick={()=>{setrender('Jery')}}>
+                    <li className="menu-item">
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
-                            <div data-i18n="Basic">Jury</div>
+                            <Link onClick={() => { setrender('ListeDefis') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">Defis</div>
+                            </Link>
                         </a>
                     </li>
-                    <li className="menu-item" onClick={()=>{setrender('Admin')}}>
+                    <li className="menu-item">
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
-                            <div data-i18n="Basic">Admin</div>
-
+                            <Link  onClick={() => { setrender('CreeDefi') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">Cree une Defi</div>
+                            </Link>
                         </a>
                     </li>
-
+                    <li className="menu-item">
+                        <a href="" className="menu-link">
+                            <i className="menu-icon tf-icons bx bx-collection"></i>
+                            <Link  onClick={() => { setrender('Noter') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">Noter</div>
+                            </Link>
+                        </a>
+                    </li>
 
                 </ul>
             </aside>
@@ -129,11 +140,15 @@ function Sidebar({role}) {
                 </nav>
 
                 <div class={`content-wrapper  sm: ${x?'  ' : 'd-none'}`}>
-                {render==="Admin" && <Admin/>}
-                {render==="Jery" && <Jery/>}
-                {render==="Etudiant" && <Etuduent/>}
+            {render === "CreeDefi" && <CreeDefi />}
+            {render === "ListeDefis" && <ListeDefis />}
+            {render === "ListeEquipes" && <ListeEquipes />}
+            {render === "Noter" && <Noter />}
+
+          </div>
 
 
+            
     
               </div> 
 
@@ -142,12 +157,9 @@ function Sidebar({role}) {
             </div>
         </div>
 
-        {/* <div className="layout-overlay layout-menu-toggle"> */}
 
 
-        {/* </div> */}
-    </div>
   );
 }
 
-export default Sidebar;
+export default JuryPage;

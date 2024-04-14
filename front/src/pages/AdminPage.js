@@ -4,7 +4,7 @@ import Admin from '../components/Admin';
 import Jery from '../components/Jery';
 import Etuduent from '../components/Etuduent';
 
-function Sidebar({ prop }) {
+function AdminPage({ prop }) {
   const [x, setx] = useState(true);
   const [render, setrender] = useState('Admin');
 
@@ -152,4 +152,4 @@ function Sidebar({ prop }) {
   );
 }
 
-export default Sidebar;
+export default AdminPage;

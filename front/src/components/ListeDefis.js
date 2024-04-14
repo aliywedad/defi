@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-export default function RenderTravail(){
+export default function ListeDefis(){
 
 return(
 
