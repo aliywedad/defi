@@ -8,4 +8,3 @@ class User(models.Model):
     password = models.CharField(max_length=128) 
     # You might want to use a more secure method for storing passwords in production
 
-  
