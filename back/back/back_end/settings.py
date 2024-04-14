@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djongo',
     'corsheaders',
     'rest_framework',
     'myapp'
@@ -67,17 +68,32 @@ WSGI_APPLICATION = 'back_end.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'defi4',
+#         'ENFORCE_SCHEMA': False,  # Optional: set to True to enforce schema validation
+#         'CLIENT': {
+#             'host': 'mongodb://127.0.0.1:27017',
+#         }
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'defi4',
-        'ENFORCE_SCHEMA': False,  # Optional: set to True to enforce schema validation
-        'CLIENT': {
-            'host': 'mongodb://127.0.0.1:27017',
-        }
+        'NAME': 'Defi4',
+        'HOST': '127.0.0.1',
+        'PORT': 27017,
     }
 }
-
 
 
 
