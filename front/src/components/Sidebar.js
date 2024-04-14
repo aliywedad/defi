@@ -114,7 +114,7 @@ const [x,setx]=useState(true)
                     </div>
                 </nav>
 
-                <div class="content-wrapper">
+                <div class={`content-wrapper  sm: ${x?'  ' : 'd-none'}`}>
 
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="py-3 mb-4"><span class="text-muted fw-light">Etudiants</span></h4>
