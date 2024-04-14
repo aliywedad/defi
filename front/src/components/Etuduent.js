@@ -86,11 +86,7 @@ return(    <div className="container-xxl flex-grow-1 container-p-y">
                             <td className='p-4'>{item.spécialité}</td>
                             <td className='p-4'>{item.niveau}</td>
                             <td className='p-4'> 
-<<<<<<< HEAD
-                            <a className='m-2'>modifier</a>
-=======
                             <a className='m-2' onClick={()=>{setitem(item)}} > modifier </a>
->>>>>>> a33680b09732c72b0d276e320aaa50b348df6c62
                             <a className='m-2'onClick={()=>{delet(item.id)}} >  suprimer</a>
                             </td>
                         </tr>
@@ -200,8 +196,6 @@ function Add({ setrender ,fetchData}) {
     </div>
   );
 }
-<<<<<<< HEAD
-=======
 
 
 
@@ -301,4 +295,3 @@ function Update({ setitem ,fetchData,item}) {
     </div>
   );
 }
->>>>>>> a33680b09732c72b0d276e320aaa50b348df6c62
