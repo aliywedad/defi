@@ -96,3 +96,42 @@ def list_Etudiant(request):
 # #         return Response(serializer.data, status=201)
 # #     return Response(serializer.errors, status=400)
 # # # @api_view(['POST'])
+
+
+
+
+
+
+
+
+
+
+
+@api_view(['POST'])
+def delet_Etudiant(request):
+    id=request.data.get('id')
+    try:
+        etudiant = Etudiant.objects.get(id=id).delete()
+        return Response('200')
+    except:
+        return Response('400')
+    
+
+@api_view(['POST'])
+
+def delet_Admin(request):
+    id=request.data.get("id")
+    try:
+        obj = administrater.objects.get(id=id).delete()
+        return Response('200')
+    except:
+        return Response('400')
+    
+@api_view(['POST'])
+def delet_Jery(request):
+    id=request.data.get("id")
+    try:
+        obj = Jery.objects.get(id=id).delete()
+        return Response('200')
+    except:
+        return Response('400')
