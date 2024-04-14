@@ -78,6 +78,8 @@ def list_Jury(request):
 
 
 
+
+
 # @api_view(['POST'])
 # def isUser(request):
 #     email = request.data.get('email')
