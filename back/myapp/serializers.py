@@ -45,15 +45,12 @@ class ÉvaluationSerializer(serializers.ModelSerializer):
         model = Évaluation
         fields ='__all__'
 
-# class ÉquipeSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Équipe
-#         fields ='__all__'
+class ÉquipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Équipe
+        fields ='__all__'
 
-# class ÉquipeSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Équipe
-#         fields ='__all__'
+
 
 
 

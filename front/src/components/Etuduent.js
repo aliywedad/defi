@@ -26,14 +26,34 @@ useEffect(() => {
   };
   const[render,setrender]=useState('list')
 
-const delelt=async(id)=>{
-    console.log(id)
-}
+
 const update=async(id)=>{
     console.log(id)
 }
+const delet = async (id) => {
+  const confirmed = window.confirm('Are you sure you want to delete this item?');
+  // Check if user confirmed
+  if (confirmed) {
+    // User confirmed, proceed with deletion logic
+    // Put your deletion logic here
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/delet_Etudiant/',{"id":id});
+      console.log(response.data,"id = ",id)
+      if(response.data==='200'){
+        fetchData()
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    // console.log('Item deleted');
+  } else {
+    // User canceled, do nothing or show another message
+    console.log('Deletion canceled');
+  }}
 
-if(render==='add')return <Add setrender={setrender}/>
+
+
+if(render==='add')return <Add setrender={setrender} fetchData={fetchData}/>
 else
 return(    <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 mb-4"><span className="text-muted fw-light" > List des Etudiants</span></h4>
@@ -63,7 +83,7 @@ return(    <div className="container-xxl flex-grow-1 container-p-y">
                             <td className='p-4'>{item.niveau}</td>
                             <td className='p-4'> 
                             <a className='m-2' onClick={()=>{update(item.id)}} > modifier </a>
-                            <a className='m-2'onClick={()=>{delelt(item.id)}} >  suprimer</a>
+                            <a className='m-2'onClick={()=>{delet(item.id)}} >  suprimer</a>
                             </td>
                         </tr>
                        ))}
@@ -78,67 +98,97 @@ return(    <div className="container-xxl flex-grow-1 container-p-y">
 
 }
 
-function Add({setrender}){
-  return(
+function Add({ setrender ,fetchData}) {
+  const [formData, setFormData] = useState({
+    nom: '',
+    prenom: '',
+    email: '',
+    specialite: 'DSI', // Default value
+    niveau: 'L1' // Default value
+  });
 
-    <div class="content-wrapper">
-      <div class="container-xxl flex-grow-1 container-p-y">
-          <h4 class="py-3 mb-4"><span class="text-muted fw-light">Ajouter un etudiant </span></h4>
-    
-          <div class="row">
-              <div class="col-md-12">
-    
-                  <div class="card mb-4">
-                      <h5 class="card-header">Ajouter un etudiant </h5>
-    
-                      <hr class="my-0" />
-                      <div class="card-body">
-                        <form id="formAccountSettings" method="POST" action="" enctype="multipart/form-data">
-                              <div class="row">
-                                <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label">Nom :</label>
-                                  <input class="form-control" type="text"  name="lienGit"  autofocus required/>
-                                </div>
-                                <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label">Prenom :</label>
-                                  <input class="form-control" type="text"  name="lienGit"  autofocus required/>
-                                </div>                                 
-                                <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label">email:</label>
-                                  <input class="form-control" type="email"  name="lienGit"  autofocus required/>
-                                </div>   
-                                <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label">spécialité:</label>
-                                  <select class="form-control"  name="spécialité"  >
-                                  <option>DSI</option>
-                                  <option>CNM</option>
-                                  <option>RSS</option>
-                                  </select>                                </div>   
-                                <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label">niveau:</label>
-                                  <select class="form-control"  name="niveau"  >
-                                  <option>L1</option>
-                                  <option>L2</option>
-                                  <option>L3</option>
-                                  </select>
-                                </div>   
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-                              <div class="mt-2">
-                                  <button type="submit" class="btn btn-primary me-2">Enregistrer </button>
-                                  <button type="reset" class="btn btn-outline-secondary" onClick={()=>{setrender("list")}}>Annuler</button>
-                              </div>
-                              </div>
-                          </form>
-                      </div>
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/add_etudiant/', formData);
+
+      console.log(response.data); // Log the response data
+
+      if (response.status === 200) {
+        console.log('Etudiant ajouté avec succès');
+        fetchData()
+        setrender('list')
+        // Handle success (e.g., show a success message, navigate to another page)
+      } else {
+        console.error('Erreur lors de l\'ajout de l\'étudiant');
+        // Handle error response from the server
+      }
+    } catch (error) {
+      console.error('Erreur lors de la soumission du formulaire', error);
+      // Handle network errors or Axios-related errors
+    }
+  };
+
+  return (
+    <div className="content-wrapper">
+      <div className="container-xxl flex-grow-1 container-p-y">
+        <h4 className="py-3 mb-4"><span className="text-muted fw-light">Ajouter un étudiant</span></h4>
+
+        <div className="row">
+          <div className="col-md-12">
+            <div className="card mb-4">
+              <h5 className="card-header">Ajouter un étudiant</h5>
+              <hr className="my-0" />
+              <div className="card-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="nom" className="form-label">Nom :</label>
+                      <input className="form-control" type="text" name="nom" value={formData.nom} onChange={handleChange} autoFocus required />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="prenom" className="form-label">Prénom :</label>
+                      <input className="form-control" type="text" name="prenom" value={formData.prenom} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="email" className="form-label">Email :</label>
+                      <input className="form-control" type="email" name="email" value={formData.email} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="specialite" className="form-label">Spécialité :</label>
+                      <select className="form-control" name="specialite" value={formData.specialite} onChange={handleChange}>
+                        <option value="DSI">DSI</option>
+                        <option value="CNM">CNM</option>
+                        <option value="RSS">RSS</option>
+                      </select>
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="niveau" className="form-label">Niveau :</label>
+                      <select className="form-control" name="niveau" value={formData.niveau} onChange={handleChange}>
+                        <option value="L1">L1</option>
+                        <option value="L2">L2</option>
+                        <option value="L3">L3</option>
+                      </select>
+                    </div>
+
+                    <div className="mt-2">
+                      <button type="submit" className="btn btn-primary me-2">Enregistrer</button>
+                      <button type="button" className="btn btn-outline-secondary" onClick={() => { setrender("list") }}>Annuler</button>
+                    </div>
                   </div>
-    
+                </form>
               </div>
+            </div>
           </div>
+        </div>
       </div>
-    
-    
-    
-      <div class="content-backdrop fade"></div>
+      <div className="content-backdrop fade"></div>
     </div>
-    )
+  );
 }
