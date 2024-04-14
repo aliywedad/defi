@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-export default function ListeDefis(){
+export default function RenderTravail(){
 
 return(
 
@@ -9,7 +9,6 @@ return(
 
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="py-3 mb-4"><span class="text-muted fw-light">defis</span>  </h4>
-
           
               <div class="card">
                 <h5 class="card-header"><a href="/create_defi">Liste des défis</a></h5>

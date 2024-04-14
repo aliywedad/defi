@@ -1,7 +1,28 @@
-import React from 'react';
+import React ,{ useState,useEffect } from 'react';
 
 export default function ListeEquipes(){
 
+    const[donner,setDonner]=useState([])
+
+
+    useEffect(() => {
+      fetchData()
+      }, []);
+    
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://127.0.0.1:8000/list_Equipe/');
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
+          setDonner(data);
+          console.log(data)
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+    
 return(
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -20,12 +41,14 @@ return(
             </tr>
         </thead>
         <tbody class="table-border-bottom-0">
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><a href="">Voir Détails</a></td> 
-            </tr>
+        {donner.map(item=>(
+        <tr>
+            <td className='p-4'>{item.nomEquipe}</td>
+            <td className='p-4'>{item.leadID}</td>
+            <td className='p-4'>{item.adjointID}</td>
+            <td className='p-4'>{item.nombreMembres}</td>
+        </tr>
+        ))}
         </tbody>
         </table>
     </div>

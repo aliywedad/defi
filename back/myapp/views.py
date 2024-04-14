@@ -50,6 +50,8 @@ def list_Equipe(request):
     serializer = ÉquipeSerializer(equipe, many=True)
     return Response(serializer.data)
 
+
+
 # @api_view(['POST'])
 # def isUser(request):
 #     email = request.data.get('email')
@@ -263,3 +265,39 @@ def delet_Jery(request):
         return Response('200')
     except:
         return Response('400')
+    
+    
+    
+@api_view(['PUT'])
+def update_etudiant(request, etudiant_id):
+    if request.method == 'PUT':
+        # Get the existing Etudiant object by ID
+        try:
+            etudiant = Etudiant.objects.get(id=etudiant_id)
+        except Etudiant.DoesNotExist:
+            return Response({'error': 'Etudiant not found'}, status=404)
+        
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+        
+        # Update the fields if they exist in the request data
+        if 'nom' in data:
+            etudiant.nom = data['nom']
+        if 'prenom' in data:
+            etudiant.prénom = data['prenom']
+        if 'email' in data:
+            etudiant.email = data['email']
+        if 'specialite' in data:
+            etudiant.spécialité = data['specialite']
+        if 'niveau' in data:
+            etudiant.niveau = data['niveau']
+        
+        # Save the updated Etudiant object
+        etudiant.save()
+        
+        # Return a JSON response indicating success
+        return Response({'message': 'Etudiant updated successfully'})
+    
+    else:
+        # Return a JSON response with an error message if the request method is not PUT
+        return Response({'error': 'Only PUT requests are allowed for this endpoint'}, status=405)
