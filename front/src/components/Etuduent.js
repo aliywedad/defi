@@ -56,8 +56,8 @@ return(    <div className="container-xxl flex-grow-1 container-p-y">
                     <tbody className="table-border-bottom-0">
                        {donner.map(item=>(
                         <tr>
-                            <td className='p-4'>{item.Nom}</td>
-                            <td className='p-4'>{item.Prenom}</td>
+                            <td className='p-4'>{item.nom}</td>
+                            <td className='p-4'>{item.prénom}</td>
                             <td className='p-4'>{item.email}</td>
                             <td className='p-4'>{item.spécialité}</td>
                             <td className='p-4'>{item.niveau}</td>

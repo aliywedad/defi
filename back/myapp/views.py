@@ -17,6 +17,18 @@ def list_Etudiant(request):
     serializer = EtudiantSerializer(etudiant, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def list_Admin(request):
+    admin = administrater.objects.all()
+    serializer = administraterSerializer(admin, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def list_Jury(request):
+    jury = Jery.objects.all()
+    serializer = JerySerializer(jury, many=True)
+    return Response(serializer.data)
+
 
 # @api_view(['POST'])
 # def isUser(request):

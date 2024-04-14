@@ -15,8 +15,7 @@ SECRET_KEY = 'django-insecure-nn%dxo$g8&o3ew^55yvoom$d0qk%tw%y7k(l0m_d!hl&@tpbir
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','0.0.0.0','192.168.100.221','10.0.2.2']
-CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
-CORS_ALLOW_HEADERS = ['Content-Type', 'Authorization']
+
 
 # Application definition
 
@@ -37,9 +36,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-     'django.middleware.csrf.CsrfViewMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # CorsMiddleware should be before CommonMiddleware
-    "django.middleware.common.CommonMiddleware",    
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -89,15 +88,10 @@ WSGI_APPLICATION = 'back_end.wsgi.application'
 
 DATABASES = {
     'default': {
-<<<<<<< HEAD
         'ENGINE': 'djongo',
         'NAME': 'Defi4',
         'HOST': '127.0.0.1',
         'PORT': 27017,
-=======
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR / 'db.sqlite3'),  # Utilisez str() ici
->>>>>>> c33657a1fae21310d08102386ee208c7d25415e7
     }
 }
 
@@ -120,11 +114,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+CORS_ALLOWED_ALL_ORIGINS=True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3001",
-    "http://localhost:3000",
+    "https://localhost:8000",
+    "https://127.0.0.1:8000",
+    
+    "https://192.168.100.221:8000"
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
