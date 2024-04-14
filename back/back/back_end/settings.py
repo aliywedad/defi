@@ -15,7 +15,8 @@ SECRET_KEY = 'django-insecure-nn%dxo$g8&o3ew^55yvoom$d0qk%tw%y7k(l0m_d!hl&@tpbir
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','0.0.0.0','192.168.100.221','10.0.2.2']
-
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+CORS_ALLOW_HEADERS = ['Content-Type', 'Authorization']
 
 # Application definition
 
@@ -35,9 +36,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
+     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CorsMiddleware should be before CommonMiddleware
     "django.middleware.common.CommonMiddleware",    
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -97,8 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",
-    "http://127.0.0.1:3000",
-    "http://192.168.100.63:3000",
+    "http://localhost:3000",
 ]
 
 
