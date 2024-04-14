@@ -1,24 +1,31 @@
 
 import React, { useState,useEffect } from 'react';
+import axios from "axios";
 
 export default function Admin(){
 
   const[donner,setDonner]=useState([])
-  const[render,setrender]=useState('list')
 
 
-useEffect(() => {
-    const data = [
-      {"id":1,"Nom":"aliy","Prenom":"med","email":"22086@supnum.mr",'defi':[]},
-      {"id":2,"Nom":"med","Prenom":"med","email":"22086@supnum.mr"},
-      {"id":3,"Nom":"solieman","Prenom":"med","email":"22086@supnum.mr"},
-      {"id":4,"Nom":"bechir","Prenom":"med","email":"22086@supnum.mr"},
-      {"id":5,"Nom":"cherive","Prenom":"med","email":"22086@supnum.mr"},
-      {"id":6,"Nom":"khato","Prenom":"med","email":"22086@supnum.mr"},
-      {"id":7,"Nom":"cheri","Prenom":"med","email":"22086@supnum.mr"}
-    ];
-    setDonner(data);
-  }, []);
+  useEffect(() => {
+    fetchData()
+    }, []);
+  
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/list_Admin/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setDonner(data);
+        console.log(data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    const[render,setrender]=useState('list')
+  
 
 const delelt=async(id)=>{
     console.log(id)
@@ -48,8 +55,8 @@ return(
                     <tbody className="table-border-bottom-0">
                        {donner.map(item=>(
                         <tr>
-                            <td className='p-4'>{item.Nom}</td>
-                            <td className='p-4'>{item.Prenom}</td>
+                            <td className='p-4'>{item.nom}</td>
+                            <td className='p-4'>{item.prénom}</td>
                             <td className='p-4'>{item.email}</td>
                             <td className='p-4'> 
                             <a className='m-2' onClick={()=>{update(item.id)}} > modifier </a>
