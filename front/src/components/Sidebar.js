@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
+
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Navbar, Nav, Accordion } from 'react-bootstrap';
 
-function SidebarExample() {
+function Sidebar({prop}) {
 const [x,setx]=useState(true)
 
   return (
@@ -35,15 +37,28 @@ const [x,setx]=useState(true)
                     <li className="menu-item">
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
+                            <Link to='/' className="menu-link" style={{ textDecoration: 'none' }}>
                             <div data-i18n="Basic">Etudiants</div>
+                            </Link>
                         </a>
                     </li>
                     <li className="menu-item">
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
-                            <div data-i18n="Basic">Enseignants</div>
+                            <Link to={`/Jery`}className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">Jery</div>
+                            </Link>
                         </a>
                     </li>
+                    <li className="menu-item">
+                        <a href="" className="menu-link">
+                            <i className="menu-icon tf-icons bx bx-collection"></i>
+                            <Link to={`/Admin`}className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">Admin</div>
+                            </Link>
+                        </a>
+                    </li>
+
 
                 </ul>
             </aside>
@@ -115,33 +130,8 @@ const [x,setx]=useState(true)
                 </nav>
 
                 <div class={`content-wrapper  sm: ${x?'  ' : 'd-none'}`}>
-
-    <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="py-3 mb-4"><span class="text-muted fw-light">Etudiants</span></h4>
-
-
-              <div class="card">
-                <h5 class="card-header"> etudiants</h5>
-                <div class="table-responsive text-nowrap">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>email</th>
-                        <th>spécialité</th>
-                        <th>niveau</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                       
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              </div>
+           {prop}
+    
               </div> 
 
 
@@ -157,4 +147,4 @@ const [x,setx]=useState(true)
   );
 }
 
-export default SidebarExample;
+export default Sidebar;
