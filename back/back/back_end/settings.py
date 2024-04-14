@@ -70,8 +70,10 @@ WSGI_APPLICATION = 'back_end.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR / 'db.sqlite3'),  # Utilisez str() ici
+        'ENGINE': 'djongo',
+        'NAME': 'Defi4',
+        'HOST': '127.0.0.1',
+        'PORT': 27017,
     }
 }
 
