@@ -29,7 +29,6 @@ return(
     <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 mb-4"><span className="text-muted fw-light">List des Jerys</span></h4>
 
-
               <div className="card">
                 <h5 className="card-header">  <a href='/#'>Ajouter</a></h5>
                 <div className="table-responsive text-nowrap">
