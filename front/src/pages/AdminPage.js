@@ -6,7 +6,7 @@ import Etuduent from '../components/Etuduent';
 
 function AdminPage({ prop }) {
   const [x, setx] = useState(true);
-  const [render, setrender] = useState('Admin');
+  const [render, setrender] = useState('Etudiant');
 
   return (
      <div className="layout-wrapper layout-content-navbar">
