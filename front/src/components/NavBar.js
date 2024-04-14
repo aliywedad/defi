@@ -8,7 +8,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 export default function NavBar(){
 
     return(
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg"  style={{backgroundColor:"silver"}} data-bs-theme="light">
       <Container fluid>
         <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
