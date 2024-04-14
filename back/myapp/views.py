@@ -9,13 +9,53 @@ import json
 from rest_framework.request import Request
 import smtplib
 import random
+    # spécialité = models.CharField(max_length=255, choices=SPECIALITE_CHOICES)
+    # niveau = models.CharField(max_length=3, choices=NIVEAU_CHOICES)
+    # email = models.EmailField(unique=True)
+    # nom = models.CharField(max_length=255)
+    # prénom = models.CharField(max_length=255)
+# Etudiant.objects.create(nom='m',prénom='m',email='m@s.n',spécialité='DSI',niveau='L1',)
 
+# administrater.objects.create(nom='med',prenom='m',email='m@s.n')
+# administrater.objects.create(nom='aliy',prenom='m',email='m@1s.n')
+# administrater.objects.create(nom='sidi',prenom='m',email='m@2s.n')
+# Etudiant.objects.create(nom='med',prénom='m1',email='m1@s.n',spécialité='DSI',niveau='L1',)
+# Etudiant.objects.create(nom='aliy',prénom='m2',email='m2@s.n',spécialité='DSI',niveau='L1',)
+# Etudiant.objects.create(nom='sidi',prénom='m4',email='m3@s.n',spécialité='DSI',niveau='L1',)
+# Jery.objects.create(nom='aliy',prénom='m1',email='m5@s.n')
+# Jery.objects.create(nom='sidi',prénom='m2',email='m6@s.n')
+# Utilisateur.objects.create(email='etudiant@supnum.mr',motDePasse='etudiant',role='étudiant')
 
 @api_view(['GET'])
 def list_Etudiant(request):
     etudiant = Etudiant.objects.all()
     serializer = EtudiantSerializer(etudiant, many=True)
     return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def auth(request):
+    login = request.data.get("login")
+    pwd = request.data.get("pwd")
+
+    try:
+        user = Utilisateur.objects.get(email=login)
+        
+        # Check if user exists and password matches
+        if user and user.motDePasse == pwd:
+            role = user.role
+            # Return the role in the response
+            return Response({'role': role}, status=200)
+        else:
+            # If user does not exist or password does not match, return unauthorized
+            return Response("Invalid credentials", status=401)
+    except Utilisateur.DoesNotExist:
+        # If user does not exist, return not found
+        return Response("User does not exist", status=404)
+    except Exception as e:
+        # Handle any other unexpected errors
+        return Response(str(e), status=500)
 
 @api_view(['GET'])
 def list_Admin(request):
@@ -29,6 +69,11 @@ def list_Jury(request):
     serializer = JerySerializer(jury, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def list_Equipe(request):
+    equipe = Équipe.objects.all()
+    serializer = ÉquipeSerializer(equipe, many=True)
+    return Response(serializer.data)
 
 # @api_view(['POST'])
 # def isUser(request):
@@ -97,14 +142,149 @@ def list_Jury(request):
 
 
 
+# @api_view(['POST'])
+# def create_user(request):
+#     """
+#     Create a new user.
+#     """
+#     serializer = UserSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#         return Response(serializer.data, status=201)
+#     return Response(serializer.errors, status=400)
 # # @api_view(['POST'])
-# # def create_user(request):
-# #     """
-# #     Create a new user.
-# #     """
-# #     serializer = UserSerializer(data=request.data)
-# #     if serializer.is_valid():
-# #         serializer.save()
-# #         return Response(serializer.data, status=201)
-# #     return Response(serializer.errors, status=400)
-# # # @api_view(['POST'])
+
+
+@api_view(['POST'])
+def add_etudiant(request):
+    if request.method == 'POST':
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+        print("lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
+        print(data)
+        
+        # Extract the data fields from the JSON
+        nom = data.get('nom')
+        prenom = data.get('prenom')
+        email = data.get('email')
+        specialite = data.get('specialite')
+        niveau = data.get('niveau')
+        
+        # Create and save the Etudiant object
+        try:
+            etudiant = Etudiant.objects.create(
+                nom=nom,
+                prénom=prenom,
+                email=email,
+                spécialité=specialite,
+                niveau=niveau
+            )
+            
+            # Return a JSON response indicating success
+            return Response({'message': 'Etudiant added successfully'})
+        except:
+            return Response({'message': 'Etudiant added successfully'})
+
+    
+    else:
+        # Return a JSON response with an error message if the request method is not POST
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+
+
+
+@api_view(['POST'])
+def add_Admin(request):
+    if request.method == 'POST':
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+        print("lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
+        print(data)
+        
+        # Extract the data fields from the JSON
+        nom = data.get('nom')
+        prenom = data.get('prenom')
+        email = data.get('email')
+         
+        # Create and save the Etudiant object
+        try:
+            obj = administrater.objects.create(
+                nom=nom,
+                # prénom=prenom,
+                prenom=prenom,
+                email=email,
+  
+            )
+            
+            # Return a JSON response indicating success
+            return Response({'message': 'administrater has error'})
+        except:
+            return Response({'message': 'administrater has error'})
+
+    
+    else:
+        # Return a JSON response with an error message if the request method is not POST
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+@api_view(['POST'])
+def add_Jury(request):
+    if request.method == 'POST':
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+        
+        # Extract the data fields from the JSON
+        nom = data.get('nom')
+        prenom = data.get('prenom')
+        email = data.get('email')
+         
+        # Create and save the Etudiant object
+        try:
+            obj = Jery.objects.create(
+                nom=nom,
+                prénom=prenom,
+                email=email,
+  
+            )
+            
+            # Return a JSON response indicating success
+            return Response({'message': 'jery has created succefuly'})
+        except:
+            return Response({'message': 'jery has error'})
+
+    
+    else:
+        # Return a JSON response with an error message if the request method is not POST
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+
+
+
+
+@api_view(['POST'])
+def delet_Etudiant(request):
+    id=request.data.get('id')
+    try:
+        etudiant = Etudiant.objects.get(id=id).delete()
+        return Response('200')
+    except:
+        return Response('400')
+    
+
+@api_view(['POST'])
+
+def delet_Admin(request):
+    id=request.data.get("id")
+    try:
+        obj = administrater.objects.get(id=id).delete()
+        return Response('200')
+    except:
+        return Response('400')
+    
+@api_view(['POST'])
+def delet_Jery(request):
+    id=request.data.get("id")
+    try:
+        obj = Jery.objects.get(id=id).delete()
+        return Response('200')
+    except:
+        return Response('400')
