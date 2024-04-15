@@ -122,6 +122,7 @@ class GrilleEvaluation(models.Model):
     def __str__(self):
         return f"{self.defi} - {self.critere} (Coefficient: {self.coefficient})"
     
+
 class EvaluationJury(models.Model):
     soumission = models.ForeignKey(Soumission, on_delete=models.CASCADE)
     membre_jury = models.ForeignKey(Jery, on_delete=models.CASCADE)
