@@ -46,9 +46,7 @@ useEffect(() => {
 const[render,setrender]=useState('list')
 
 
-const delelt=async(id)=>{
-    console.log(id)
-}
+
 const update=async(id)=>{
     console.log(id)
 }
