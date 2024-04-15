@@ -1,12 +1,12 @@
-### Guide d'installation de défi 
+# Guide d'installation de défi 
 ## Pour vous connecter à la plateform, vous deves suives les etapes suivants
 
 D'abord clonner le lrepositorie via ce lien:
 git clone https://github.com/aliywedad/defi4.git
 
-Le Backend sous le repertoire 
+### Le Backend sous le repertoire 
 defi4/back/
-Le front sout le repertoire 
+### Le front sout le repertoire 
 defi4/front/
 
 Dependances de Backend
