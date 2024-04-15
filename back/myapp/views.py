@@ -487,15 +487,13 @@ def create_defi(request):
     with open(file_path, 'wb+') as destination:
         for chunk in uploaded_file.chunks():
             destination.write(chunk)
-    print('*************************************************************************')
-    print(uploaded_file.name)
-    print(file_path)
+ 
     try:
         defi_instance = Défi.objects.create(
-            titre='Sample Title',
-            desc='Sample Description',
-            date_debut='2024-04-15',
-            date_fin='2024-04-30',
+            titre=titre,
+            desc=desc,
+            date_debut=date_debut,
+            date_fin=date_fin,
             fileName=uploaded_file.name,
             filePath= file_path,
             )
