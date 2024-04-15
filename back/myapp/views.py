@@ -24,13 +24,38 @@ import random
 # Etudiant.objects.create(nom='sidi',prénom='m4',email='m3@s.n',spécialité='DSI',niveau='L1',)
 # Jery.objects.create(nom='aliy',prénom='m1',email='m5@s.n')
 # Jery.objects.create(nom='sidi',prénom='m2',email='m6@s.n')
-# Jery.objects.create(nom='med',prénom='m3',email='m7@s.n')
+# Utilisateur.objects.create(email='etudiant@supnum.mr',motDePasse='etudiant',role='étudiant')
 
 @api_view(['GET'])
 def list_Etudiant(request):
     etudiant = Etudiant.objects.all()
     serializer = EtudiantSerializer(etudiant, many=True)
     return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def auth(request):
+    login = request.data.get("login")
+    pwd = request.data.get("pwd")
+
+    try:
+        user = Utilisateur.objects.get(email=login)
+        
+        # Check if user exists and password matches
+        if user and user.motDePasse == pwd:
+            role = user.role
+            # Return the role in the response
+            return Response({'role': role}, status=200)
+        else:
+            # If user does not exist or password does not match, return unauthorized
+            return Response("Invalid credentials", status=401)
+    except Utilisateur.DoesNotExist:
+        # If user does not exist, return not found
+        return Response("User does not exist", status=404)
+    except Exception as e:
+        # Handle any other unexpected errors
+        return Response(str(e), status=500)
 
 @api_view(['GET'])
 def list_Admin(request):
