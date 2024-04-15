@@ -4,7 +4,8 @@ import axios from "axios";
 
 export default function Etuduent(){
 
-const[donner,setDonner]=useState([])
+  const[donner,setDonner]=useState([])
+  const[item,setitem]=useState("")
 
 
 useEffect(() => {
@@ -49,11 +50,14 @@ const delet = async (id) => {
   } else {
     // User canceled, do nothing or show another message
     console.log('Deletion canceled');
-  }}
+  }
+}
+
 
 
 
 if(render==='add')return <Add setrender={setrender} fetchData={fetchData}/>
+else if(item!="")return <Update setitem={setitem} fetchData={fetchData} item={item}/>
 else
 return(    <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 mb-4"><span className="text-muted fw-light" > List des Etudiants</span></h4>
@@ -82,7 +86,7 @@ return(    <div className="container-xxl flex-grow-1 container-p-y">
                             <td className='p-4'>{item.spécialité}</td>
                             <td className='p-4'>{item.niveau}</td>
                             <td className='p-4'> 
-                            <a className='m-2' onClick={()=>{update(item.id)}} > modifier </a>
+                            <a className='m-2' onClick={()=>{setitem(item)}} > modifier </a>
                             <a className='m-2'onClick={()=>{delet(item.id)}} >  suprimer</a>
                             </td>
                         </tr>
@@ -180,6 +184,105 @@ function Add({ setrender ,fetchData}) {
                     <div className="mt-2">
                       <button type="submit" className="btn btn-primary me-2">Enregistrer</button>
                       <button type="button" className="btn btn-outline-secondary" onClick={() => { setrender("list") }}>Annuler</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="content-backdrop fade"></div>
+    </div>
+  );
+}
+
+
+
+function Update({ setitem ,fetchData,item}) {
+  const [formData, setFormData] = useState({
+    id: item.id,
+    nom: item.nom,
+    prenom: item.prénom,
+    email: item.email,
+    specialite: item.spécialité, // Default value
+    niveau: item.niveau // Default value
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/update_etudiant/', formData);
+
+      console.log(response.data); // Log the response data
+
+      if (response.status === 200) {
+        console.log('Etudiant ajouté avec succès',"id : ",formData);
+        fetchData()
+        setitem("")
+        // setrender('list')
+        // Handle success (e.g., show a success message, navigate to another page)
+      } else {
+        console.error('Erreur lors de l\'ajout de l\'étudiant');
+        // Handle error response from the server
+      }
+    } catch (error) {
+      console.error('Erreur lors de la soumission du formulaire', error);
+      // Handle network errors or Axios-related errors
+    }
+  };
+
+  return (
+    <div className="content-wrapper">
+      <div className="container-xxl flex-grow-1 container-p-y">
+        <h4 className="py-3 mb-4"><span className="text-muted fw-light">Ajouter un étudiant</span></h4>
+
+        <div className="row">
+          <div className="col-md-12">
+            <div className="card mb-4">
+              <h5 className="card-header">Ajouter un étudiant</h5>
+              <hr className="my-0" />
+              <div className="card-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="nom" className="form-label">Nom :</label>
+                      <input className="form-control" type="text" name="nom" value={formData.nom} onChange={handleChange} autoFocus required />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="prenom" className="form-label">Prénom :</label>
+                      <input className="form-control" type="text" name="prenom" value={formData.prenom} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="email" className="form-label">Email :</label>
+                      <input className="form-control" type="email" name="email" value={formData.email} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="specialite" className="form-label">Spécialité :</label>
+                      <select className="form-control" name="specialite" value={formData.specialite} onChange={handleChange}>
+                        <option value="DSI">DSI</option>
+                        <option value="CNM">CNM</option>
+                        <option value="RSS">RSS</option>
+                      </select>
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="niveau" className="form-label">Niveau :</label>
+                      <select className="form-control" name="niveau" value={formData.niveau} onChange={handleChange}>
+                        <option value="L1">L1</option>
+                        <option value="L2">L2</option>
+                        <option value="L3">L3</option>
+                      </select>
+                    </div>
+
+                    <div className="mt-2">
+                      <button type="submit" className="btn btn-primary me-2">Enregistrer</button>
+                      <button type="button" className="btn btn-outline-secondary" onClick={() => { setitem("") }}>Annuler</button>
                     </div>
                   </div>
                 </form>

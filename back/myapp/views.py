@@ -25,13 +25,19 @@ import random
 # Jery.objects.create(nom='aliy',prénom='m1',email='m5@s.n')
 # Jery.objects.create(nom='sidi',prénom='m2',email='m6@s.n')
 # Utilisateur.objects.create(email='etudiant@supnum.mr',motDePasse='etudiant',role='étudiant')
-
+# Utilisateur.objects.create(email='organisateur@supnum.mr',motDePasse='organisateur',role='organisateur')
+# Utilisateur.objects.create(email='jury@supnum.mr',motDePasse='jury',role='jury')
 @api_view(['GET'])
 def list_Etudiant(request):
     etudiant = Etudiant.objects.all()
     serializer = EtudiantSerializer(etudiant, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def list_Utilisateur(request):
+    utilisateur = Utilisateur.objects.all()
+    serializer = UtilisateurSerializer(utilisateur, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['POST'])
@@ -64,16 +70,20 @@ def list_Admin(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+def list_defi(request):
+    defi = Défi.objects.all()
+    serializer = DéfiSerializer(defi, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def list_Jury(request):
     jury = Jery.objects.all()
     serializer = JerySerializer(jury, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def list_Equipe(request):
-    equipe = Équipe.objects.all()
-    serializer = ÉquipeSerializer(equipe, many=True)
-    return Response(serializer.data)
+
+
+
 
 # @api_view(['POST'])
 # def isUser(request):
@@ -288,3 +298,257 @@ def delet_Jery(request):
         return Response('200')
     except:
         return Response('400')
+    
+# __________________________________________________________equipe________________________________________
+    
+@api_view(['GET'])
+def list_Equipe(request):
+    equipe = Équipe.objects.all()
+    serializer = ÉquipeSerializer(equipe, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def add_Equipe(request):
+    if request.method == 'POST':
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+        # Extract the data fields from the JSON
+        nomEquipe = data.get('nomEquipe')
+        leadID = data.get('leadID')
+        adjointID = data.get('adjointID')
+        nombreMembres = data.get('nombreMembres')
+         
+        # Create and save the Etudiant object
+        try:
+            obj = Équipe.objects.create(
+                nomEquipe=nomEquipe,
+                leadID=leadID,
+                adjointID=adjointID,
+                nombreMembres=nombreMembres,
+  
+            )
+            
+            # Return a JSON response indicating success
+            return Response({'message': 'equipe has created succefuly'})
+        except:
+            return Response({'message': 'equipe has error'})
+
+    
+    else:
+        # Return a JSON response with an error message if the request method is not POST
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+# __________________________________________________________end equipe________________________________________
+
+
+
+import os
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['POST'])
+def create_defi(request):
+    # Access form data including files
+    titre = request.POST.get('titre')
+    date_debut = request.POST.get('date_debut')
+    date_fin = request.POST.get('date_fin')
+    desc = request.POST.get('desc')
+    notification = request.POST.get('notification', False)
+      # Checkbox value
+
+    # Access uploaded file
+    uploaded_file = request.FILES['file']
+
+    # Create the directory if it doesn't exist
+    file_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'files')
+    if not os.path.exists(file_directory):
+        os.makedirs(file_directory)
+
+    # Construct the relative file path
+    relative_file_path = os.path.join('files', uploaded_file.name)
+
+    # Save the uploaded file with the relative path
+    file_path = os.path.join(file_directory, uploaded_file.name)
+    with open(file_path, 'wb+') as destination:
+        for chunk in uploaded_file.chunks():
+            destination.write(chunk)
+    print('*************************************************************************')
+    print(uploaded_file.name)
+    print(file_path)
+    try:
+        defi_instance = Défi.objects.create(
+            titre='Sample Title',
+            desc='Sample Description',
+            date_debut='2024-04-15',
+            date_fin='2024-04-30',
+            fileName=uploaded_file.name,
+            filePath= file_path,
+            )
+        return Response('200')
+    except:
+        print("error")
+
+    return Response({'message': 'Défi created successfully', 'file_path': relative_file_path})
+
+# class Équipe(models.Model):
+#     nomEquipe = models.CharField(max_length=255)
+#     leadID = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='lead_teams')
+#     adjointID = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='adjoint_teams')
+#     nombreMembres = models.IntegerField()
+# print(Etudiant.objects.get(id=11))
+# e=Équipe.objects.create(nomEquipe="404",leadID=Etudiant.objects.get(id=11),adjointID=Etudiant.objects.get(id=11),nombreMembres=2)
+@api_view(['POST'])
+def rander(request):
+    # Access form data including files
+    date = request.POST.get('date')
+    GIT = request.POST.get('GIT')
+    d = request.POST.get('DEFI')
+    e = request.POST.get('Equipe')
+    DEFI=Défi.objects.get(id=e)
+    equipe=Équipe.objects.get(id=e)
+
+    print("*******************************************************************************************888")
+    print(date,GIT,DEFI,equipe)
+ 
+    uploaded_file = request.FILES['file']
+
+    file_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'files')
+    if not os.path.exists(file_directory):
+        os.makedirs(file_directory)
+
+    # Construct the relative file path
+    relative_file_path = os.path.join('files', uploaded_file.name)
+
+    # Save the uploaded file with the relative path
+    file_path = os.path.join(file_directory, uploaded_file.name)
+    with open(file_path, 'wb+') as destination:
+        for chunk in uploaded_file.chunks():
+            destination.write(chunk)
+    print('*************************************************************************')
+    print(uploaded_file.name)
+    print(file_path)
+    #     équipe = models.ForeignKey(Équipe, on_delete=models.CASCADE)
+    # défi = models.ForeignKey(Défi, on_delete=models.CASCADE)
+    # lienGit = models.CharField(max_length=255)
+    # dateSoumission = models.DateTimeField()
+    # status = models.CharField(max_length=7, choices=STATUS_CHOICES)
+    # fileNmae = models.TextField
+    # filePath = models.TextField
+    # try:
+    defi_instance = Soumission.objects.create(
+        équipe=equipe,
+        défi=DEFI,
+        status="soumis",
+        lienGit=date,
+        dateSoumission='2024-04-30',
+        # fileName=uploaded_file.name,
+        # filePath= file_path,
+        )
+    print("*****************************************************************************************************************8")
+    print(file_path,uploaded_file.name)
+    return Response('200')
+    # except:
+    #     print("error")
+
+    return Response({'message': 'Défi created successfully', 'file_path': relative_file_path})
+
+
+@api_view(['POST'])
+def update_etudiant(request):
+    if request.method == 'POST':
+        # Extract the updated data from the request body
+        data = request.data
+        etudiant_id = data.get('id')
+        
+        try:
+            # Retrieve the etudiant object from the database
+            etudiant = Etudiant.objects.get(id=etudiant_id)
+            
+            # Update the etudiant object with the new data
+            etudiant.nom = data.get('nom')
+            etudiant.prenom = data.get('prenom')
+            etudiant.email = data.get('email')
+            etudiant.specialite = data.get('specialite')
+            etudiant.niveau = data.get('niveau')
+            
+            # Save the updated etudiant object
+            etudiant.save()
+            
+            # Return a success response
+            return Response({'message': 'Etudiant updated successfully'})
+        
+        except Etudiant.DoesNotExist:
+            # Return an error response if the etudiant does not exist
+            return Response({'error': 'Etudiant not found'}, status=404)
+    
+    else:
+        # Return a method not allowed response for other HTTP methods
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+
+
+@api_view(['POST'])
+def update_jury(request):
+    if request.method == 'POST':
+        # Extract the updated data from the request body
+        data = request.data
+        etudiant_id = data.get('id')
+        
+        try:
+            # Retrieve the etudiant object from the database
+            etudiant = Jery.objects.get(id=etudiant_id)
+            
+            # Update the etudiant object with the new data
+            etudiant.nom = data.get('nom')
+            etudiant.prenom = data.get('prenom')
+            etudiant.email = data.get('email')
+ 
+            
+            # Save the updated etudiant object
+            etudiant.save()
+            
+            # Return a success response
+            return Response({'message': 'Etudiant updated successfully'})
+        
+        except Etudiant.DoesNotExist:
+            # Return an error response if the etudiant does not exist
+            return Response({'error': 'Etudiant not found'}, status=404)
+    
+    else:
+        # Return a method not allowed response for other HTTP methods
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+@api_view(['POST'])
+def update_Admin(request):
+    if request.method == 'POST':
+        # Extract the updated data from the request body
+        data = request.data
+        etudiant_id = data.get('id')
+        
+        try:
+            # Retrieve the etudiant object from the database
+            etudiant = administrater.objects.get(id=etudiant_id)
+            
+            # Update the etudiant object with the new data
+            etudiant.nom = data.get('nom')
+            etudiant.prenom = data.get('prenom')
+            etudiant.email = data.get('email')
+ 
+            
+            # Save the updated etudiant object
+            etudiant.save()
+            
+            # Return a success response
+            return Response({'message': 'Etudiant updated successfully'})
+        
+        except Etudiant.DoesNotExist:
+            # Return an error response if the etudiant does not exist
+            return Response({'error': 'Etudiant not found'}, status=404)
+    
+    else:
+        # Return a method not allowed response for other HTTP methods
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+
+
