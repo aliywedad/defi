@@ -33,11 +33,7 @@ def list_Etudiant(request):
     serializer = EtudiantSerializer(etudiant, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def list_Utilisateur(request):
-    utilisateur = Utilisateur.objects.all()
-    serializer = UtilisateurSerializer(utilisateur, many=True)
-    return Response(serializer.data)
+
 
 
 @api_view(['POST'])
@@ -315,10 +311,14 @@ def add_Equipe(request):
         data = json.loads(request.body)
         # Extract the data fields from the JSON
         nomEquipe = data.get('nomEquipe')
-        leadID = data.get('leadID')
-        adjointID = data.get('adjointID')
+        l =  data.get('leadID_id')
+        a =  data.get('adjointID_id')
         nombreMembres = data.get('nombreMembres')
-         
+        print("============================================================================")
+        print(l)
+        print(a)
+        leadID = Etudiant.objects.get(id=l)
+        adjointID = Etudiant.objects.get(id=a)
         # Create and save the Etudiant object
         try:
             obj = Équipe.objects.create(
