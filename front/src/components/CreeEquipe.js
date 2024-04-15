@@ -14,7 +14,7 @@ export default function CreeEquipe(){
   
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/list_Utilisateur/');
+        const response = await fetch('http://127.0.0.1:8000/list_Etudiant/');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -31,15 +31,18 @@ export default function CreeEquipe(){
   
       const [formData, setFormData] = useState({
         nomEquipe: '',
-        leadID: '',
-        adjointID: '',
+        leadID_id: '',
+        adjointID_id: '',
         nombreMembres:''
       });
     
       const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: value
+        }));
       };
-    
       
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,17 +51,20 @@ export default function CreeEquipe(){
           const response = await axios.post('http://127.0.0.1:8000/add_Equipe/', formData);
     
           console.log(response.data); // Log the response data
+          console.log("data is ",formData); // Log the response data
     
           if (response.status === 200) {
-            console.log('Etudiant ajouté avec succès');
+            console.log('equipe ajouté avec succès');
             fetchData()
             // Handle success (e.g., show a success message, navigate to another page)
           } else {
             console.error('Erreur lors de l\'ajout de l\'étudiant');
+            console.log(formData)
             // Handle error response from the server
           }
         } catch (error) {
-          console.error('Erreur lors de la soumission du formulaire', error);
+          console.error('Erreur lors de la soumission du formulaire');
+          console.log("les donnees",formData)
           // Handle network errors or Axios-related errors
         }
       };
@@ -84,39 +90,36 @@ return(
                       <div class="row">
                         <div class="mb-3 col-md-6">
                             <label for="firstName" class="form-label">Nom :</label>
-                            <input class="form-control" type="text" id="firstName" name="nom_equipe" value={formData.nomEquipe} onChange={handleChange} required/>
+                            <input class="form-control" type="text"  name="nomEquipe" value={formData.nomEquipe}   onChange={handleChange} required/>
 
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="lead_id" class="form-label">Lead:</label>
-                            <select id="lead_id" name="lead_id" class="form-control"  value={formData.leadID} onChange={handleChange} required>
-                                
-                                {donner.map(item=>(
-
-                                  <option value="{item.id}">
-                                    {item.email}
-                                  </option>
-
-                                ))}
-                                
-                            </select>
+                            <select id="lead_id" className="form-control" name="leadID_id" value={formData.leadID_id} onChange={handleChange} required>
+                            <option value="">Select Lead</option>
+                            {donner.map(item => (
+                              <option key={item.id} value={item.id}>
+                                {item.nom}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="adjoint_id" class="form-label">Adjoint:</label>
-                            <select id="adjoint_id" name="adjoint_id" class="form-control"  value={formData.adjointID} onChange={handleChange} required>
-                            {donner.map(item=>(
-
-                              <option value="{item.id}">
-                                {item.email}
+                            <select id="adjoint_id" className="form-control" name="adjointID_id" value={formData.adjointID_id} onChange={handleChange} required>
+                            <option value="">Select Adjoint</option>
+                            {donner.map(item => (
+                              <option key={item.id} value={item.id}>
+                                {item.nom}
                               </option>
-
                             ))}
-                            </select>
+                          </select>
+
                         </div>
                         <div class="mb-3 col-md-6">
                           <label class="form-label">Membres:</label>
                           
-                              <input  type="Number" name="membres_ids" class="form-control" value={formData.nombreMembres} onChange={handleChange} required />
+                              <input  type="text" name="nombreMembres" value={formData.nombreMembres}  class="form-control" onChange={handleChange} required />
                         </div>
                       </div>
                       <div class="mt-2">
