@@ -4,10 +4,13 @@
 D'abord, clonez le dépôt via ce lien :
 
 git clone https://github.com/aliywedad/defi4.git
+
 Le Backend se trouve sous le répertoire
+
 defi4/back/
 
 Le front se trouve sous le répertoire
+
 defi4/front/
 
 Dépendances du Backend :
@@ -96,8 +99,13 @@ Pour démarrer l'application front-end, utilisez la commande :
 npm i
 
 npm start
+
 Vous pouvez ensuite naviguer dans l'application comme vous le souhaitez.
 
-Vous pouvez y accéder au frontend de l'application via le lien suivant : http://165.232.114.213:3000/
+Vous pouvez y accéder au frontend de l'application via le lien suivant : 
 
-Remarque : Nous avons rencontré des problèmes pour le déploiement du backend, nous avons fait ce qu'il faut mais cela ne fonctionne pas. Nous ne savons pas si c'est un problème de version ou autre. Néanmoins, le déploiement du frontend fonctionne à merveille.
+http://165.232.114.213:3000/
+
+Remarque :
+
+Nous avons rencontré des problèmes pour le déploiement du backend, nous avons fait ce qu'il faut mais cela ne fonctionne pas. Nous ne savons pas si c'est un problème de version ou autre. Néanmoins, le déploiement du frontend fonctionne à merveille.
