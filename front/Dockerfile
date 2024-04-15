@@ -1,5 +1,5 @@
 # front/Dockerfile
-FROM node:17
+FROM node:20
 
 WORKDIR /frontend
 
