@@ -345,3 +345,103 @@ def create_defi(request):
     # ...
    
     return Response({'message': 'Défi created successfully', 'file_path': relative_file_path})
+
+
+@api_view(['POST'])
+def update_etudiant(request):
+    if request.method == 'POST':
+        # Extract the updated data from the request body
+        data = request.data
+        etudiant_id = data.get('id')
+        
+        try:
+            # Retrieve the etudiant object from the database
+            etudiant = Etudiant.objects.get(id=etudiant_id)
+            
+            # Update the etudiant object with the new data
+            etudiant.nom = data.get('nom')
+            etudiant.prenom = data.get('prenom')
+            etudiant.email = data.get('email')
+            etudiant.specialite = data.get('specialite')
+            etudiant.niveau = data.get('niveau')
+            
+            # Save the updated etudiant object
+            etudiant.save()
+            
+            # Return a success response
+            return Response({'message': 'Etudiant updated successfully'})
+        
+        except Etudiant.DoesNotExist:
+            # Return an error response if the etudiant does not exist
+            return Response({'error': 'Etudiant not found'}, status=404)
+    
+    else:
+        # Return a method not allowed response for other HTTP methods
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+
+
+@api_view(['POST'])
+def update_jury(request):
+    if request.method == 'POST':
+        # Extract the updated data from the request body
+        data = request.data
+        etudiant_id = data.get('id')
+        
+        try:
+            # Retrieve the etudiant object from the database
+            etudiant = Jery.objects.get(id=etudiant_id)
+            
+            # Update the etudiant object with the new data
+            etudiant.nom = data.get('nom')
+            etudiant.prenom = data.get('prenom')
+            etudiant.email = data.get('email')
+ 
+            
+            # Save the updated etudiant object
+            etudiant.save()
+            
+            # Return a success response
+            return Response({'message': 'Etudiant updated successfully'})
+        
+        except Etudiant.DoesNotExist:
+            # Return an error response if the etudiant does not exist
+            return Response({'error': 'Etudiant not found'}, status=404)
+    
+    else:
+        # Return a method not allowed response for other HTTP methods
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+@api_view(['POST'])
+def update_Admin(request):
+    if request.method == 'POST':
+        # Extract the updated data from the request body
+        data = request.data
+        etudiant_id = data.get('id')
+        
+        try:
+            # Retrieve the etudiant object from the database
+            etudiant = administrater.objects.get(id=etudiant_id)
+            
+            # Update the etudiant object with the new data
+            etudiant.nom = data.get('nom')
+            etudiant.prenom = data.get('prenom')
+            etudiant.email = data.get('email')
+ 
+            
+            # Save the updated etudiant object
+            etudiant.save()
+            
+            # Return a success response
+            return Response({'message': 'Etudiant updated successfully'})
+        
+        except Etudiant.DoesNotExist:
+            # Return an error response if the etudiant does not exist
+            return Response({'error': 'Etudiant not found'}, status=404)
+    
+    else:
+        # Return a method not allowed response for other HTTP methods
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+
+
