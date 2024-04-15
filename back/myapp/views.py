@@ -247,9 +247,9 @@ def add_Jury(request):
             )
             
             # Return a JSON response indicating success
-            return Response({'message': 'administrater has error'})
+            return Response({'message': 'jery has created succefuly'})
         except:
-            return Response({'message': 'administrater has error'})
+            return Response({'message': 'jery has error'})
 
     
     else:
