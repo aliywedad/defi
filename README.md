@@ -6,8 +6,22 @@ D'abord, clonez le dépôt via ce lien :
 
 git clone https://github.com/aliywedad/defi4.git
 
+
+
 # NB : 
 La base de données de l'application est en ligne, donc il faut avoir une bonne connection pour manipuler l'application en local.
+
+*************************************( utilisateurs )************************************
+les utilisateurs :
+ligin : jury@supnum.mr
+pwd : jury
+
+ligin : admin@supnum.mr
+pwd : admin
+
+login : etudiant@supnum.mr
+pwd : etudiant
+************************************************************************************************
 
 
 Le Backend se trouve sous le répertoire
