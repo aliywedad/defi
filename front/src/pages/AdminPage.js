@@ -6,6 +6,7 @@ import Etuduent from '../components/Etuduent';
 import List_criter from '../components/Add_criter';
 import ListDefi from '../components/ListeDefis';
 import Affectation from '../components/Affectation';
+import Resultats from '../components/Resultats'
 
 function AdminPage({ prop }) {
   const [x, setx] = useState(true);
@@ -87,6 +88,14 @@ function AdminPage({ prop }) {
                             </Link>
                         </a>
                     </li>
+                    {/* <li className="menu-item">
+                        <a href="" className="menu-link">
+                            <i className="menu-icon tf-icons bx bx-collection"></i>
+                            <Link onClick={() => { setrender('Resultats') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">Resultats</div>
+                            </Link>
+                        </a>
+                    </li> */}
 
                 </ul>
             </aside>
@@ -164,6 +173,8 @@ function AdminPage({ prop }) {
             {render === "Add_criter" && <List_criter/>}
             {render === "defi" && <ListDefi prop={'admin'}/>}
             {render === "Affectation" && <Affectation />}
+            {/* {render === "Resultats" && <Resultats />} */}
+
           </div>
 
 

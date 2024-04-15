@@ -9,6 +9,7 @@ import json
 from rest_framework.request import Request
 import smtplib
 import random
+from django.db.models import Sum
     # spécialité = models.CharField(max_length=255, choices=SPECIALITE_CHOICES)
     # niveau = models.CharField(max_length=3, choices=NIVEAU_CHOICES)
     # email = models.EmailField(unique=True)
@@ -390,6 +391,18 @@ def add_Equipe(request):
     else:
         # Return a JSON response with an error message if the request method is not POST
         return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+@api_view(['GET'])
+def Resultats(request):
+    equipes = Équipe.objects.all().select_related('leadID', 'adjointID')
+    
+    for equipe in equipes:
+        soumissions = Soumission.objects.filter(équipe=equipe)
+        total_notes = soumissions.aggregate(Sum('evaluationjury_note'))['evaluationjurynote_sum']
+        equipe.total_notes = total_notes
+
+    serializer = ÉquipeSerializer(equipes, many=True)
+    return Response(serializer.data)
 
 # __________________________________________________________end equipe________________________________________
 
