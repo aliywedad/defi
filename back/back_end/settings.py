@@ -15,7 +15,8 @@ SECRET_KEY = 'django-insecure-nn%dxo$g8&o3ew^55yvoom$d0qk%tw%y7k(l0m_d!hl&@tpbir
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','0.0.0.0','192.168.100.221','10.0.2.2']
-
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+CORS_ALLOW_HEADERS = ['Content-Type', 'Authorization']
 
 # Application definition
 
@@ -26,19 +27,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djongo',
     'corsheaders',
     'rest_framework',
-    'myapp'
-
+    'myapp',
+    'djongo',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CorsMiddleware should be before CommonMiddleware
+    "django.middleware.common.CommonMiddleware",    
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -68,24 +68,6 @@ WSGI_APPLICATION = 'back_end.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'defi4',
-#         'ENFORCE_SCHEMA': False,  # Optional: set to True to enforce schema validation
-#         'CLIENT': {
-#             'host': 'mongodb://127.0.0.1:27017',
-#         }
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -94,6 +76,7 @@ DATABASES = {
         'PORT': 27017,
     }
 }
+
 
 
 
@@ -114,13 +97,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-CORS_ALLOWED_ALL_ORIGINS=True
 CORS_ALLOWED_ORIGINS = [
-    "https://localhost:8000",
-    "https://127.0.0.1:8000",
-    
-    "https://192.168.100.221:8000"
+    "http://localhost:3001",
+    "http://localhost:3000",
 ]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
