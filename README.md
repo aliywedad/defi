@@ -1,7 +1,22 @@
-## Guide d'installation pour Défi4
-Pour vous connecter au site, vous devez créer la base de données MongoDB appelée "Defi4" et exécuter les commandes suivantes :
+### Guide d'installation de défi 
+## Pour vous connecter à la plateform, vous deves suives les etapes suivants
+
+D'abord clonner le lrepositorie via ce lien:
+git clone https://github.com/aliywedad/defi4.git
+
+Le Backend sous le repertoire 
+defi4/back/
+Le front sout le repertoire 
+defi4/front/
+
+Dependances de Backend
+
+Naviger vers le repertoire backend
 
 
+Exécuter les commandes suivantes :
+
+pip install -r requirements.txt
 pip install pytz
 pip install djongo==1.3.6
 pip install pymongo==3.12.3
