@@ -37,7 +37,7 @@ export default function Admin(){
         const response = await axios.post('http://127.0.0.1:8000/delet_Admin/',{"id":id});
         console.log(response.data,"id = ",id)
         if(response.data==='200'){
-          // fetchData()
+          fetchData()
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -50,7 +50,7 @@ export default function Admin(){
 const update=async(id)=>{
     console.log(id)
 }
-if(render==='add')return <Add setrender={setrender}/>
+if(render==='add')return <Add setrender={setrender} fetchData={fetchData}/>
 else
 return(
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -73,7 +73,7 @@ return(
                        {donner.map(item=>(
                         <tr>
                             <td className='p-4'>{item.nom}</td>
-                            <td className='p-4'>{item.prénom}</td>
+                            <td className='p-4'>{item.prenom}</td>
                             <td className='p-4'>{item.email}</td>
                             <td className='p-4'> 
                             <a className='m-2' onClick={()=>{update(item.id)}} > modifier </a>
@@ -91,51 +91,80 @@ return(
 
 
 }
-function Add({setrender}){
-  return(
+function Add({ setrender ,fetchData}) {
+  const [formData, setFormData] = useState({
+    nom: '',
+    prenom: '',
+    email: '',
+  });
 
-    <div class="content-wrapper">
-      <div class="container-xxl flex-grow-1 container-p-y">
-          <h4 class="py-3 mb-4"><span class="text-muted fw-light">Ajouter un Admin </span></h4>
-    
-          <div class="row">
-              <div class="col-md-12">
-    
-                  <div class="card mb-4">
-                      <h5 class="card-header">Ajouter un Admin </h5>
-    
-                      <hr class="my-0" />
-                      <div class="card-body">
-                        <form id="formAccountSettings" method="POST" action="" enctype="multipart/form-data">
-                              <div class="row">
-                                <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label">Nom :</label>
-                                  <input class="form-control" type="text"  name="lienGit"  autofocus required/>
-                                </div>
-                                <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label">Prenom :</label>
-                                  <input class="form-control" type="text"  name="lienGit"  autofocus required/>
-                                </div>                                 
-                                <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label">email:</label>
-                                  <input class="form-control" type="email"  name="lienGit"  autofocus required/>
-                                </div>   
-                              <div class="mt-2">
-                                  <button type="submit" class="btn btn-primary me-2">Enregistrer </button>
-                                  <button type="reset" class="btn btn-outline-secondary" onClick={()=>{setrender("list")}}>Annuler</button>
-                              </div>
-                              </div>
-                          </form>
-                      </div>
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/add_Admin/', formData);
+
+      console.log(response.data); // Log the response data
+
+      if (response.status === 200) {
+        console.log('Etudiant ajouté avec succès');
+        fetchData()
+        setrender('list')
+        // Handle success (e.g., show a success message, navigate to another page)
+      } else {
+        console.error('Erreur lors de l\'ajout de l\'étudiant');
+        // Handle error response from the server
+      }
+    } catch (error) {
+      console.error('Erreur lors de la soumission du formulaire', error);
+      // Handle network errors or Axios-related errors
+    }
+  };
+  return (
+    <div className="content-wrapper">
+      <div className="container-xxl flex-grow-1 container-p-y">
+        <h4 className="py-3 mb-4"><span className="text-muted fw-light">Ajouter un Admin</span></h4>
+
+        <div className="row">
+          <div className="col-md-12">
+            <div className="card mb-4">
+              <h5 className="card-header">Ajouter un Admin</h5>
+              <hr className="my-0" />
+              <div className="card-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="nom" className="form-label">Nom :</label>
+                      <input className="form-control" type="text" name="nom" value={formData.nom} onChange={handleChange} autoFocus required />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="prenom" className="form-label">Prénom :</label>
+                      <input className="form-control" type="text" name="prenom" value={formData.prenom} onChange={handleChange} required />
+                    </div>
+                    <div className="mb-3 col-md-6">
+                      <label htmlFor="email" className="form-label">Email :</label>
+                      <input className="form-control" type="email" name="email" value={formData.email} onChange={handleChange} required />
+                    </div>
+                    
+                    
+                     
+                    <div className="mt-2">
+                      <button type="submit" className="btn btn-primary me-2">Enregistrer</button>
+                      <button type="button" className="btn btn-outline-secondary" onClick={() => { setrender("list") }}>Annuler</button>
+                    </div>
                   </div>
-    
+                </form>
               </div>
+            </div>
           </div>
+        </div>
       </div>
-    
-    
-    
-      <div class="content-backdrop fade"></div>
+      <div className="content-backdrop fade"></div>
     </div>
-    )
+  );
 }

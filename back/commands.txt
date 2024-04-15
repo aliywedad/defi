@@ -1,0 +1,10 @@
+pip install djangorestframework
+ pip install django-cors-headers
+
+ # Configuration de MongoDB
+Installer les commendes suivant
+
+pip install pytz 
+pip install djongo==1.3.6 
+pip install pymongo==3.12.3 
+pip install -r requirements.txt     
