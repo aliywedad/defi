@@ -116,7 +116,7 @@ class AffectationJury(models.Model):
 class GrilleEvaluation(models.Model):
     defi = models.ForeignKey(Défi, on_delete=models.CASCADE)
     critere = models.ForeignKey(Critère, on_delete=models.CASCADE)
-
+    
     def _str_(self):
         return f"{self.defi} - {self.critere} (Coefficient: {self.coefficient})"
     

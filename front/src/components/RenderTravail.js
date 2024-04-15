@@ -1,8 +1,51 @@
-
-import React from 'react';
-import axios from 'axios';
+import React ,{ useState,useEffect } from 'react';
+import axios from "axios";
 
 export default function RenderTravail(){
+  const[donner,setDonner]=useState([])
+  const[donner2,setDonner2]=useState([])
+
+ 
+
+
+useEffect(() => {
+  fetchData2()
+  }, []);
+  
+const fetchData2 = async () => {
+  try {
+    const response = await fetch('http://127.0.0.1:8000/list_defi/');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data2 = await response.json();
+    setDonner2(data2);
+    console.log(data2)
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
+  useEffect(() => {
+    fetchData()
+    }, []);
+  
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/list_Equipe/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setDonner(data);
+        console.log(data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -16,6 +59,7 @@ export default function RenderTravail(){
     
           if (response.status === 200) {
             console.log('Data sent successfully');
+            setrender("CreeEquipe")
             // setrender('ListeDefis')
             // Handle success (e.g., show a success message)
           } else {
@@ -41,17 +85,29 @@ export default function RenderTravail(){
                 <div className="card-body">
                   <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <div className="row">
-                      <div className="mb-3 col-md-12">
-                        <label htmlFor="titre" className="form-label">Equipe</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          id="titre"
-                          name="Equipe"
-                          autoFocus
-                          required
-                        />
-                      </div>
+
+                    <div class="mb-3 col-md-12">
+                      <label for="adjoint_id" class="form-label">Equipe:</label>
+                      <select id="adjoint_id" className="form-control" name="Equipe"  required>
+                      <option hidden>Sélectionnez une Equipe</option>
+                        {donner.map(item => (
+                            <option key={item.id} value={item.id}>
+                              {item.nomEquipe}
+                            </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div class="mb-3 col-md-12">
+                      <label for="adjoint_id" class="form-label">DEFI:</label>
+                      <select id="adjoint_id" className="form-control" name="DEFI"  required>
+                      <option hidden>Sélectionnez une DEFI</option>
+                        {donner2.map(item => (
+                            <option key={item.id} value={item.id}>
+                              {item.titre}
+                            </option>
+                        ))}
+                      </select>
+                    </div>
                       <div className="mb-3 col-md-12">
                         <label  className="form-label">DEFI</label>
                         <input className="form-control" type="text" name="DEFI" id="date_debut" required />
@@ -66,6 +122,7 @@ export default function RenderTravail(){
                         <label htmlFor="date_fin" className="form-label">Date du sommision </label>
                         <input className="form-control" type="date" name="date" id="date_fin" required />
                       </div>
+
                       <div className="mb-3 col-md-12">
                         <label htmlFor="desc" className="form-label">Sélectionnez un ou plusieurs fichier(s)</label>
                         <input className="form-control" type="file" name="file" id="file" required />

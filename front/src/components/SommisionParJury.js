@@ -28,7 +28,7 @@ export default function SoumissionParJury({id}) {
       console.error('Erreur lors de la récupération des soumissions', error);
     }
   };
-  if(render==='add')return <Add setrender={setRender} id_soumission={id_soumission} id_defi={id_defi} />
+  if(render==='add')return <Add setrender={setRender} id_soumission={id_soumission} id_defi={id_defi} idjery={id} />
   else
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -52,7 +52,7 @@ export default function SoumissionParJury({id}) {
                   <td className='p-4'>{item.titre}</td>
                   <td className='p-4'>{item.lienGit}</td>
                   <td className='p-4'>
-                    <button   className="btn btn-primary m-2" onClick={()=>{setRender("add"); setid_defi(item.defi);setid_soumission(item.id)}}>Noter</button>
+                    <button   className="btn btn-primary m-2" onClick={()=>{setRender("add"); setid_defi(item.défi);setid_soumission(item.id)}}>Noter</button>
                   </td>
                 </tr>
               ))}
@@ -65,9 +65,10 @@ export default function SoumissionParJury({id}) {
 }
 
 
-function Add({ setrender ,id_soumission ,id_defi}) {
+function Add({ setrender ,id_soumission ,id_defi,id_jery}) {
   const [formData, setFormData] = useState({
     idSou: id_soumission,
+    jery: id_jery,
     not: '',
   });
   const[donner,setDonner]=useState([])  
@@ -75,15 +76,14 @@ function Add({ setrender ,id_soumission ,id_defi}) {
     fetchDataa()
     }, []);
     
- 
   const fetchDataa = async () => {
     try {
-        const response = await axios.post('http://127.0.0.1:8000/list_criterGrille/', {id_defi});
+        const response = await axios.post('http://127.0.0.1:8000/list_criterGrille/', {id_defi:id_defi});
   
         console.log(response.data); // Log the response data
   
         if (response.status === 200) {
-          console.log('Soumissions récupérées avec succès');
+          console.log('Soumissions récupérées avec succès the data is : ',response.data);
         //   setrender('list');
           setDonner(response.data);
         } else {
@@ -115,20 +115,22 @@ function Add({ setrender ,id_soumission ,id_defi}) {
       // Handle network errors or Axios-related errors
     }
   };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   return (
     <div className="content-wrapper">
       <div className="container-xxl flex-grow-1 container-p-y">
-        <h4 className="py-3 mb-4"><span className="text-muted fw-light">Ajouter un étudiant</span></h4>
-
+ 
         <div className="row">
           <div className="col-md-12">
             <div className="card mb-4">
               <h5 className="card-header">Grille d'evaluation</h5>
               <hr className="my-0" />
               <div className="card-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="row">
+                   <div className="row">
  
                   <div className="table-responsive text-nowrap">
                   <table className="table table-hover">
@@ -151,12 +153,28 @@ function Add({ setrender ,id_soumission ,id_defi}) {
                 </div>
 
                     <div className="mt-2">
-                      <button type="submit" className="btn btn-primary me-2">Enregistrer</button>
-                      <button type="button" className="btn btn-outline-secondary" onClick={() => { setrender("list") }}>Annuler</button>
+                    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="note">Note:</label>
+        <input
+          type="text"
+          id="note"
+          name="not"
+          className="form-control w-50 m-4" 
+
+          value={formData.not}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <button type="submit" className="btn btn-primary me-2">Enregistrer</button>
+                      <button type="button" className="btn btn-outline-secondary" onClick={() => { setrender("list") }}>Annuler</button>    </form>
+
+
                     </div>
                   </div>
-                </form>
-              </div>
+               </div>
             </div>
           </div>
         </div>

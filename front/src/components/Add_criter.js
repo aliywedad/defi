@@ -34,7 +34,7 @@ if(render==='add')return <Add setrender={setrender} fetchData={fetchData}/>
 else
 return(
     <div className="container-xxl flex-grow-1 container-p-y">
-      <h4 className="py-3 mb-4"><span className="text-muted fw-light">List des Jerys</span></h4>
+      <h4 className="py-3 mb-4"><span className="text-muted fw-light">List des criteres</span></h4>
 
               <div className="card">
               <h5 className="card-header">  <span class="btn btn-outline-secondary" onClick={()=>{setrender("add")}}>Ajouter </span></h5>
@@ -101,12 +101,12 @@ function Add({ setrender ,fetchData}) {
   return (
     <div className="content-wrapper">
       <div className="container-xxl flex-grow-1 container-p-y">
-        <h4 className="py-3 mb-4"><span className="text-muted fw-light">Ajouter un Jury</span></h4>
+        <h4 className="py-3 mb-4"><span className="text-muted fw-light">Ajouter un Critere</span></h4>
 
         <div className="row">
           <div className="col-md-12">
             <div className="card mb-4">
-              <h5 className="card-header">Ajouter un Jury</h5>
+              <h5 className="card-header">Ajouter un Critere</h5>
               <hr className="my-0" />
               <div className="card-body">
                 <form onSubmit={handleSubmit}>

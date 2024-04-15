@@ -28,11 +28,13 @@ urlpatterns = [
     path('list_Critere/', views.list_Critere, name='list_Critere'),
     path('add_grille/', views.add_grille, name='add_grille'),
     path('list_criterGrille/', views.list_criterGrille, name='list_criterGrille'),
+    path('add_affectation/', views.add_affectation, name='add_affectation'),
 
 
     path('list_soumission/', views.list_soumission, name='list_soumission'),
     path('list_soumissionid/', views.list_soumissionid, name='list_soumissionid'),
     path('add_affectation/', views.add_affectation, name='add_affectation'),
+    path('Resultats/', views.Resultats, name='Resultats'),
 
     path('auth/', views.auth, name='auth'),  
     # path('verifEmail/', views.verification_Email, name='verification_Email'),  
