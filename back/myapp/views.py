@@ -135,7 +135,6 @@ def list_soumissionid(request):
         affectations = AffectationJury.objects.filter(membre_jury__id=id)
         for affectation in affectations:
             liste_soumissions_ids.append(affectation.soumission_id)
-        print("***********************************************************************************************************************")
         print(liste_soumissions_ids)
         
         print("")
@@ -163,6 +162,57 @@ def list_soumission(request):
     serializer = SoumissionSerializer(soums, many=True)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def list_criterGrille(request):
+    data = json.loads(request.body)
+
+    id = data.get('id_defi')
+    print("****************************************************************************************************************************************************************************************************************************** id = " ,id)
+    print("****************************************************************************************************************************************************************************************************************************** id = " ,id)
+    print("****************************************************************************************************************************************************************************************************************************** id = " ,id)
+
+    defi=Défi.objects.get(id=id)
+    
+    soums=GrilleEvaluation.objects.filter(defi=defi)
+    critere_ids = soums.values_list('critere_id', flat=True)
+    criteres = Critère.objects.filter(id__in=critere_ids)
+ 
+    serializer = CritèreSerializer(criteres, many=True)
+    return Response(serializer.data)
+
+
+
+
+@api_view(['POST'])
+def add_affectation(request):
+    if request.method == 'POST':
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+         
+        note= data.get('not')
+        idSou = data.get('idSou')
+        idjery = data.get('jery')
+        print("**************************************************************** ", note,idSou,note)
+
+        sou=Soumission.objects.get(id=idSou)
+        jery=Jery.objects.get(id=idjery)
+          
+        # Create and save the Etudiant object
+        try:
+            obj = EvaluationJury.objects.create(
+                note=note,
+                # prénom=prenom,
+                membre_jury=jery,
+                soumission=sou,
+  
+            )
+            
+            # Return a JSON response indicating success
+            return Response({'message': 'administrater has error'})
+        except:
+            return Response({'message': 'administrater has error'})
+
+    
 
 
 
@@ -172,7 +222,6 @@ def add_Admin(request):
     if request.method == 'POST':
         # Parse the JSON data from the request body
         data = json.loads(request.body)
-        print("lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
         print(data)
         
         # Extract the data fields from the JSON

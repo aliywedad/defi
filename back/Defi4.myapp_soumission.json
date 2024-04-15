@@ -1,0 +1,43 @@
+[{
+  "_id": {
+    "$oid": "661dca938bbf9506f3080bf4"
+  },
+  "id": 2,
+  "équipe_id": 1,
+  "défi_id": 1,
+  "lienGit": "2024-04-16",
+  "dateSoumission": {
+    "$date": "2024-04-30T00:00:00.000Z"
+  },
+  "status": "soumis"
+},
+{
+  "_id": {
+    "$oid": "661dcabadc91d0cb8b43ed2b"
+  },
+  "id": 3,
+  "équipe_id": 1,
+  "défi_id": 1,
+  "lienGit": "2024-04-16",
+  "dateSoumission": {
+    "$date": "2024-04-30T00:00:00.000Z"
+  },
+  "status": "soumis",
+  "fileName": "TP6 – Ergonomie(22086).pptx",
+  "filePath": "C:\\Users\\HP_Laptop\\Desktop\\S3C\\defi4\\back\\myapp\\files\\TP6 – Ergonomie(22086).pptx"
+},
+{
+  "_id": {
+    "$oid": "661e1d3b3d67d9e332005b1d"
+  },
+  "id": 4,
+  "équipe_id": 1,
+  "défi_id": 1,
+  "lienGit": "2024-04-18",
+  "dateSoumission": {
+    "$date": "2024-04-30T00:00:00.000Z"
+  },
+  "status": "soumis",
+  "fileName": "TP6 – Ergonomie(22086).pptx",
+  "filePath": "C:\\Users\\HP_Laptop\\Desktop\\S3C\\defi4\\back\\myapp\\files\\TP6 – Ergonomie(22086).pptx"
+}]

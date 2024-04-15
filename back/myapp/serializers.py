@@ -62,6 +62,10 @@ class ÉquipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Équipe
         fields ='__all__'
+class GrilleEvaluationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GrilleEvaluation
+        fields ='__all__'
 
 
 

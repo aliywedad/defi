@@ -92,11 +92,11 @@ return(
     <td className='p-4' style={{ color: item.valider === false ? "#fff" : "inherit" }}>{item.adjointID}</td>
     <td className='p-4' style={{ color: item.valider === false ? "#fff" : "inherit" }}>{item.nombreMembres}</td>
     <td>
-      <button className='btn-primary' onClick={() => {delet(item.id)}} > Supprimer</button>
+      <button className='btn btn-primary' onClick={() => {delet(item.id)}} > Supprimer</button>
     </td>
     <td>
       {item.valider === false ? (
-        <button className='btn-primary' onClick={() => {valider(item.id)}} > Valider</button>
+        <button className='btn btn-primary' onClick={() => {valider(item.id)}} > Valider</button>
       ) : null}
     </td>
   </tr>
