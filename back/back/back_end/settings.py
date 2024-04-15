@@ -30,8 +30,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'myapp',
-    'djongo'
-
+    'djongo',
 ]
 
 MIDDLEWARE = [
