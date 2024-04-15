@@ -44,6 +44,11 @@ def list_Jury(request):
     serializer = JerySerializer(jury, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def list_Equipe(request):
+    equipe = Équipe.objects.all()
+    serializer = ÉquipeSerializer(equipe, many=True)
+    return Response(serializer.data)
 
 # @api_view(['POST'])
 # def isUser(request):
