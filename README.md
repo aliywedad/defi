@@ -24,12 +24,16 @@ Naviguez vers le répertoire backend :
 
 
 cd defi4/back/
+
 Exécutez les commandes suivantes :
 
 
 pip install -r requirements.txt
+
 pip install pytz
+
 pip install djongo==1.3.6
+
 pip install pymongo==3.12.3
 
 
