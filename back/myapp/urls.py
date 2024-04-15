@@ -21,6 +21,7 @@ urlpatterns = [
     path('update_etudiant/', views.update_etudiant, name='update_etudiant'),
     path('update_jury/', views.update_jury, name='update_jury'),
     path('update_Admin/', views.update_Admin, name='update_Admin'),
+    path('rander/', views.rander, name='rander'),
 
     path('auth/', views.auth, name='auth'),  
     # path('verifEmail/', views.verification_Email, name='verification_Email'),  

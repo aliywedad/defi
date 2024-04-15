@@ -45,8 +45,8 @@ class Utilisateur(models.Model):
 
 class Équipe(models.Model):
     nomEquipe = models.CharField(max_length=255)
-    leadID = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='lead_teams')
-    adjointID = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='adjoint_teams')
+    leadID = models.ForeignKey(Etudiant, on_delete=models.CASCADE, related_name='lead_teams')
+    adjointID = models.ForeignKey(Etudiant, on_delete=models.CASCADE, related_name='adjoint_teams')
     nombreMembres = models.IntegerField()
 
     def __str__(self):
@@ -79,7 +79,8 @@ class Soumission(models.Model):
     lienGit = models.CharField(max_length=255)
     dateSoumission = models.DateTimeField()
     status = models.CharField(max_length=7, choices=STATUS_CHOICES)
-    file = models.FileField(upload_to='uploads/', null=True, blank=True)
+    fileName = models.TextField
+    filePath = models.TextField
 
 class Évaluation(models.Model):
     soumission = models.ForeignKey(Soumission, on_delete=models.CASCADE)
