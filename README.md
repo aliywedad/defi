@@ -93,3 +93,7 @@ bash
 Copy code
 npm start
 Vous pouvez ensuite naviguer dans l'application comme vous le souhaitez.
+
+Vous pouvez y acceder au frontend de l'application via un lien. 
+le lien est le suivant : http://165.232.114.213:3000/
+
