@@ -97,3 +97,5 @@ Vous pouvez ensuite naviguer dans l'application comme vous le souhaitez.
 Vous pouvez y acceder au frontend de l'application via un lien. 
 le lien est le suivant : http://165.232.114.213:3000/
 
+*Precision : Nous avons rencontré des problemes pour le deploiement du back-end , on a fait ce qu'il faut mais ça ne marche pas on ne sait pas si c'est un problème de version ou autre . Neamoins le deploiement du front-end marche à merveille .
+
