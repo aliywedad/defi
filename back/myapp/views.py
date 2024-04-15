@@ -25,7 +25,8 @@ import random
 # Jery.objects.create(nom='aliy',prénom='m1',email='m5@s.n')
 # Jery.objects.create(nom='sidi',prénom='m2',email='m6@s.n')
 # Utilisateur.objects.create(email='etudiant@supnum.mr',motDePasse='etudiant',role='étudiant')
-
+# Utilisateur.objects.create(email='organisateur@supnum.mr',motDePasse='organisateur',role='organisateur')
+# Utilisateur.objects.create(email='jury@supnum.mr',motDePasse='jury',role='jury')
 @api_view(['GET'])
 def list_Etudiant(request):
     etudiant = Etudiant.objects.all()
@@ -75,11 +76,9 @@ def list_Jury(request):
     serializer = JerySerializer(jury, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def list_Equipe(request):
-    equipe = Équipe.objects.all()
-    serializer = ÉquipeSerializer(equipe, many=True)
-    return Response(serializer.data)
+
+
+
 
 # @api_view(['POST'])
 # def isUser(request):
@@ -294,6 +293,49 @@ def delet_Jery(request):
         return Response('200')
     except:
         return Response('400')
+    
+# __________________________________________________________equipe________________________________________
+    
+@api_view(['GET'])
+def list_Equipe(request):
+    equipe = Équipe.objects.all()
+    serializer = ÉquipeSerializer(equipe, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def add_Equipe(request):
+    if request.method == 'POST':
+        # Parse the JSON data from the request body
+        data = json.loads(request.body)
+        # Extract the data fields from the JSON
+        nomEquipe = data.get('nomEquipe')
+        leadID = data.get('leadID')
+        adjointID = data.get('adjointID')
+        nombreMembres = data.get('nombreMembres')
+         
+        # Create and save the Etudiant object
+        try:
+            obj = Équipe.objects.create(
+                nomEquipe=nomEquipe,
+                leadID=leadID,
+                adjointID=adjointID,
+                nombreMembres=nombreMembres,
+  
+            )
+            
+            # Return a JSON response indicating success
+            return Response({'message': 'equipe has created succefuly'})
+        except:
+            return Response({'message': 'equipe has error'})
+
+    
+    else:
+        # Return a JSON response with an error message if the request method is not POST
+        return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+# __________________________________________________________end equipe________________________________________
+
 
 
 import os

@@ -78,8 +78,8 @@ export default function CreeDefi({setrender}) {
               </form>
             </div>
           </div>
-        </div>
       </div>
+    </div>
     </div>
   );
 }

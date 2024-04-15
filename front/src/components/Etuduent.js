@@ -50,7 +50,9 @@ const delet = async (id) => {
   } else {
     // User canceled, do nothing or show another message
     console.log('Deletion canceled');
-  }}
+  }
+}
+
 
 
 

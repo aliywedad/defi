@@ -49,6 +49,8 @@ class Équipe(models.Model):
     adjointID = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='adjoint_teams')
     nombreMembres = models.IntegerField()
 
+    def __str__(self):
+        return self.nomEquipe
 class Inscription(models.Model):
     ROLE_CHOICES = (
         ('lead', 'Lead'),
