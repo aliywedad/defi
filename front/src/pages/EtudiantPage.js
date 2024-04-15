@@ -10,7 +10,6 @@ export default function EtudiantPage({ prop }) {
   return (
      <div className="layout-wrapper layout-content-navbar">
         <div className="layout-container">
-
         <aside  className={`${x?' layout-menu ' : ''} menu-vertical menu bg-menu-theme`}>
         {/* <aside  className={`layout-menu  menu-vertical menu bg-menu-theme`}> */}
                 <div className="app-brand demo" >
@@ -52,8 +51,6 @@ export default function EtudiantPage({ prop }) {
                         </a>
                     </li>
                     
-
-
                 </ul>
             </aside>
 

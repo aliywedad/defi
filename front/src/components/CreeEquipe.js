@@ -6,7 +6,7 @@ import axios from "axios";
 export default function CreeEquipe(){
 
   const[donner,setDonner]=useState([])
-
+const [membresIds, setMembresIds] = useState([]);
 
   useEffect(() => {
     fetchData()
@@ -25,6 +25,7 @@ export default function CreeEquipe(){
         console.error('Error fetching data:', error);
       }
     };
+  
 
 
 
@@ -33,9 +34,22 @@ export default function CreeEquipe(){
         nomEquipe: '',
         leadID_id: '',
         adjointID_id: '',
-        nombreMembres:''
+        listmembre:[],
       });
-    
+      const handleChangeCheckbox = (e) => {
+        const { value, checked } = e.target;
+        if (checked) {
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            listmembre: [...prevFormData.listmembre, value],
+          }));
+        } else {
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            listmembre: prevFormData.listmembre.filter((id) => id !== value),
+          }));
+        }
+      };
       const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
@@ -48,8 +62,11 @@ export default function CreeEquipe(){
         e.preventDefault();
     
         try {
-          const response = await axios.post('http://127.0.0.1:8000/add_Equipe/', formData);
-    
+          const response = await axios.post('http://127.0.0.1:8000/add_Equipe/', {
+            ...formData,
+            membres_ids: membresIds
+          }); 
+          console.log(membresIds)   
           console.log(response.data); // Log the response data
           console.log("data is ",formData); // Log the response data
     
@@ -114,17 +131,20 @@ return(
                               </option>
                             ))}
                           </select>
-
                         </div>
-                        <div class="mb-3 col-md-6">
-                          <label class="form-label">Membres:</label>
-                          
-                              <input  type="text" name="nombreMembres" value={formData.nombreMembres}  class="form-control" onChange={handleChange} required />
+                        <div className="mb-3 col-md-6">
+                      <label className="form-label">Membres :</label><br />
+                      {donner.map(item => (
+                        <div key={item.id} className="form-check">
+                          <input className="form-check-input" type="checkbox" id={`membre_${item.id}`} name="membres_ids" value={item.id} onChange={handleChangeCheckbox} />
+                          <label className="form-check-label" htmlFor={`membre_${item.id}`}>{item.nom}</label>
                         </div>
-                      </div>
+                      ))}
+                    </div>
                       <div class="mt-2">
                         <button type="submit" class="btn btn-primary me-2">Créer Équipe </button>
                         <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+                      </div>
                       </div>
                     </form>
                   </div>
