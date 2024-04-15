@@ -24,16 +24,8 @@ Ensuite, installez les dépendances Python nécessaires avec la commande :
 
 
 pip install asgiref==3.3.4 bson==0.5.8 dataclasses==0.6 Django==2.2.22 django-cors-headers==3.7.0 djangorestframework==3.12.4 djongo==1.3.1 pymongo==3.11.4 python-dateutil==2.8.1 pytz==2021.1 six==1.16.0 sqlparse==0.2.4
-Naviguez vers le dossier defi4/front et exécutez la commande suivante :
 
-
-npm i
-Puis, naviguez vers le dossier defi4/back et exécutez les commandes suivantes :
-
-
-python manage.py makemigrations
-python manage.py migrate
-Enregistrez ces collections à l'aide de la commande mongosh dans votre terminal :
+Inseree lesdonnees suivant
 
 
 [
@@ -83,14 +75,29 @@ Enregistrez ces collections à l'aide de la commande mongosh dans votre terminal
     "role": "jury"
   }
 ]
-Enfin, pour lancer le serveur Django, utilisez la commande :
 
+#### Executer
 
+python manage.py mmakmigarations
+python manage.py migrate
+
+Puis
 python manage.py runserver
 Et pour démarrer l'application front-end, utilisez la commande :
 
-bash
-Copy code
+
+Naviguez vers le dossier defi4/front et exécutez les commandes suivants :
+
+npm i
+
+
+
+Enregistrez ces collections à l'aide de la commande mongosh dans votre terminal :
+
+
+Enfin, pour lancer le serveur Django, utilisez la commande :
+
+
 npm start
 Vous pouvez ensuite naviguer dans l'application comme vous le souhaitez.
 
