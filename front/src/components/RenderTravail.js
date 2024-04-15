@@ -59,7 +59,6 @@ const fetchData2 = async () => {
     
           if (response.status === 200) {
             console.log('Data sent successfully');
-            setrender("CreeEquipe")
             // setrender('ListeDefis')
             // Handle success (e.g., show a success message)
           } else {

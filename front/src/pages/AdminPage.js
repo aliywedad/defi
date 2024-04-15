@@ -6,7 +6,7 @@ import Etuduent from '../components/Etuduent';
 import List_criter from '../components/Add_criter';
 import ListDefi from '../components/ListeDefis';
 import Affectation from '../components/Affectation';
-import Resultats from '../components/Resultats'
+import Apropos from '../components/Apropos'
 
 function AdminPage({ prop }) {
   const [x, setx] = useState(true);
@@ -40,6 +40,14 @@ function AdminPage({ prop }) {
                       </a>
                   </li>
                     <li className="menu-header small text-uppercase"><span className="menu-header-text">Gestion</span></li>
+                    <li className="menu-item">
+                        <a href="" className="menu-link">
+                            <i className="menu-icon tf-icons bx bx-collection"></i>
+                            <Link onClick={() => { setrender('Apropos') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">A propos SupNum</div>
+                            </Link>
+                        </a>
+                    </li>
                     <li className="menu-item">
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
@@ -88,14 +96,14 @@ function AdminPage({ prop }) {
                             </Link>
                         </a>
                     </li>
-                    {/* <li className="menu-item">
+                    <li className="menu-item">
                         <a href="" className="menu-link">
                             <i className="menu-icon tf-icons bx bx-collection"></i>
-                            <Link onClick={() => { setrender('Resultats') }} className="menu-link" style={{ textDecoration: 'none' }}>
-                            <div data-i18n="Basic">Resultats</div>
+                            <Link onClick={() => { setrender('Apropos') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">A propos SupNum</div>
                             </Link>
                         </a>
-                    </li> */}
+                    </li>
 
                 </ul>
             </aside>
@@ -173,7 +181,7 @@ function AdminPage({ prop }) {
             {render === "Add_criter" && <List_criter/>}
             {render === "defi" && <ListDefi prop={'admin'}/>}
             {render === "Affectation" && <Affectation />}
-            {/* {render === "Resultats" && <Resultats />} */}
+            {render === "Apropos" && <Apropos />}
 
           </div>
 
