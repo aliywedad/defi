@@ -84,11 +84,14 @@ python manage.py migrate
 Puis
 
 Enfin, pour lancer le serveur Django, utilisez la commande :
+
 python manage.py runserver
 
-Pour démarrer l'application front-end, utilisez la commande :
+
 
 Naviguez vers le dossier defi4/front et exécutez les commandes suivantes :
+
+Pour démarrer l'application front-end, utilisez la commande :
 
 npm i
 
