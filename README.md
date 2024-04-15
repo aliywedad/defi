@@ -100,11 +100,11 @@ npm i
 
 npm start
 
-Vous pouvez ensuite naviguer dans l'application comme vous le souhaitez apartir de .
+Vous pouvez ensuite naviguer dans l'application locale comme vous le souhaitez apartir de .
 
 http://localhost:3000/
 
-Vous pouvez y accéder au frontend de l'application via le lien suivant : 
+Vous pouvez y accéder au frontend de l'application sur le server en ligne via le lien suivant  : 
 
 http://165.232.114.213:3000/
 
