@@ -1,9 +1,14 @@
 
 # Guide d'installation du défi
 ## Pour vous connecter à la plateforme, vous devez suivre les étapes suivantes :
+
 D'abord, clonez le dépôt via ce lien :
 
 git clone https://github.com/aliywedad/defi4.git
+
+# NB : 
+La base de données de l'application est en ligne, donc il faut avoir une bonne connection pour manipuler l'application en local.
+
 
 Le Backend se trouve sous le répertoire
 
