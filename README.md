@@ -3,7 +3,6 @@
 ## Pour vous connecter à la plateforme, vous devez suivre les étapes suivantes :
 D'abord, clonez le dépôt via ce lien :
 
-bash
 git clone https://github.com/aliywedad/defi4.git
 Le Backend se trouve sous le répertoire
 defi4/back/
@@ -15,12 +14,10 @@ Dépendances du Backend :
 
 Naviguez vers le répertoire backend :
 
-bash
 
 cd defi4/back/
 Exécutez les commandes suivantes :
 
-bash
 
 pip install -r requirements.txt
 pip install pytz
@@ -32,8 +29,7 @@ Ensuite, installez les dépendances Python nécessaires avec la commande :
 pip install asgiref==3.3.4 bson==0.5.8 dataclasses==0.6 Django==2.2.22 django-cors-headers==3.7.0 djangorestframework==3.12.4 djongo==1.3.1 pymongo==3.11.4 python-dateutil==2.8.1 pytz==2021.1 six==1.16.0 sqlparse==0.2.4
 Insérez les données suivantes :
 
-json
-
+Enregistrez ce collection à l'aide de la commande mongosh dans votre terminal :
 [
   {
     "_id": {
@@ -87,18 +83,14 @@ python manage.py makemigrations
 python manage.py migrate
 Puis
 
-
+Enfin, pour lancer le serveur Django, utilisez la commande :
 python manage.py runserver
+
 Pour démarrer l'application front-end, utilisez la commande :
 
 Naviguez vers le dossier defi4/front et exécutez les commandes suivantes :
 
-
 npm i
-Enregistrez ces collections à l'aide de la commande mongosh dans votre terminal :
-
-Enfin, pour lancer le serveur Django, utilisez la commande :
-
 
 npm start
 Vous pouvez ensuite naviguer dans l'application comme vous le souhaitez.
