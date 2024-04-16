@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import Admin from '../components/Admin';
 import Jery from '../components/Jery';
 import Etuduent from '../components/Etuduent';
+import List_criter from '../components/Add_criter';
+import ListDefi from '../components/ListeDefis';
+import Affectation from '../components/Affectation';
 
 function AdminPage({ prop }) {
   const [x, setx] = useState(true);
@@ -60,7 +63,30 @@ function AdminPage({ prop }) {
                             </Link>
                         </a>
                     </li>
-
+                    <li className="menu-item">
+                        <a href="" className="menu-link">
+                            <i className="menu-icon tf-icons bx bx-collection"></i>
+                            <Link  onClick={() => { setrender('Add_criter') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">les criteres</div>
+                            </Link>
+                        </a>
+                    </li>
+                    <li className="menu-item">
+                        <a href="" className="menu-link">
+                            <i className="menu-icon tf-icons bx bx-collection"></i>
+                            <Link  onClick={() => { setrender('defi') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">les defis</div>
+                            </Link>
+                        </a>
+                    </li>
+                    <li className="menu-item">
+                        <a href="" className="menu-link">
+                            <i className="menu-icon tf-icons bx bx-collection"></i>
+                            <Link  onClick={() => { setrender('Affectation') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">Affectation</div>
+                            </Link>
+                        </a>
+                    </li>
 
                 </ul>
             </aside>
@@ -135,6 +161,9 @@ function AdminPage({ prop }) {
             {render === "Admin" && <Admin />}
             {render === "Jery" && <Jery />}
             {render === "Etudiant" && <Etuduent />}
+            {render === "Add_criter" && <List_criter/>}
+            {render === "defi" && <ListDefi prop={'admin'}/>}
+            {render === "Affectation" && <Affectation />}
           </div>
 
 

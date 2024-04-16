@@ -29,7 +29,7 @@ function App() {
       {/* admin */}
     <Route path="/" element={<Login/>} /> 
     <Route path="/Etudiant" element={<EtudiantPage />} /> 
-    <Route path="/Jery" element={<JuryPage />} /> 
+    <Route path="/Jery/:id_jury" element={<JuryPage />} /> 
     <Route path="/Admin" element={<AdminPage />} /> 
 
 

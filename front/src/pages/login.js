@@ -1,7 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
-function Login() {
+
+function Login( {message}) {
+
+  // function handleCallbackResponse (response) {
+  // console.log("l")
+  // }
+  
+  // useEffect(() => {
+  //   google.accounts.id.initialize({
+  //     client_id: "964065372421-01o3o5knudb3j34k6n41pnsc1ddkdcs2.apps.googleusercontent.com",
+  //     callback: handleCallbackResponse
+  //   });
+  
+  //   google.accounts.id.renderButton(
+  //     document.getElementById("signInDiv"),
+  //     { theme: "outline", size: "large" }
+  //   );
+  // }, []);
+
+
+
    const [email, setEmail] = useState('');
   const [Loggedin, setLoggedin] = useState(false);
   // const [Role, setRole] = useState('');
@@ -28,7 +48,7 @@ function Login() {
   
         } else if (data.role==='jury') {
           console.log('Jery')
-          navigate('/Jery');
+          navigate(`/Jery/${data.id}`); // Use ${} for interpolation
   
         } else if (data.role==='étudiant') {
           console.log('Etudiant')
@@ -50,11 +70,19 @@ function Login() {
   };
 
   return (
+    //   <div className="App">
+
     <div className="container-xxl">
       <div className="authentication-wrapper authentication-basic container-p-y">
         <div className="authentication-inner">
+           <div className="App">
+           <div className="signInDiv"></div>
+
+           </div>
+
           <div className="card" style={{ maxWidth: "500px", margin: "auto" }}>
             <div className="card-body">
+              {message} <br/>
               <form id="formAuthentication" className="mb-3" onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">Email </label>

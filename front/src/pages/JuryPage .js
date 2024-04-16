@@ -4,8 +4,12 @@ import CreeDefi from '../components/CreeDefi';
 import ListeDefis from '../components/ListeDefis';
 import ListeEquipes from '../components/ListeEquipes';
 import Noter from '../components/Noter';
+import { useParams } from 'react-router-dom';
+import SoumissionParJury from '../components/SommisionParJury';
 
 function JuryPage({ prop }) {
+    const { id_jury } = useParams();
+console.log("id jury is ",id_jury)
   const [x, setx] = useState(true);
   const [render, setrender] = useState('ListeEquipes');
 
@@ -66,6 +70,15 @@ function JuryPage({ prop }) {
                             <i className="menu-icon tf-icons bx bx-collection"></i>
                             <Link  onClick={() => { setrender('Noter') }} className="menu-link" style={{ textDecoration: 'none' }}>
                             <div data-i18n="Basic">Noter</div>
+                            </Link>
+                        </a>
+                    </li>
+
+                    <li className="menu-item">
+                        <a href="" className="menu-link">
+                            <i className="menu-icon tf-icons bx bx-collection"></i>
+                            <Link  onClick={() => { setrender('somissionevalue') }} className="menu-link" style={{ textDecoration: 'none' }}>
+                            <div data-i18n="Basic">Soumissions evalues</div>
                             </Link>
                         </a>
                     </li>
@@ -144,6 +157,7 @@ function JuryPage({ prop }) {
             {render === "ListeDefis" && <ListeDefis />}
             {render === "ListeEquipes" && <ListeEquipes />}
             {render === "Noter" && <Noter />}
+            {render === "somissionevalue" && <SoumissionParJury id={id_jury} />}
 
           </div>
 
