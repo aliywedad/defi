@@ -170,7 +170,7 @@ function PokemonFetcher({ name }) {
         const response = await fetch(`https://logo.clearbit.com/${name}.com`);
 
         if (!response.ok) {
-          throw new Error("Could not fetch resource");
+          throw new Error("");
         }
 
         // Assuming Clearbit API returns the logo directly
@@ -187,13 +187,13 @@ function PokemonFetcher({ name }) {
   return (
     <div>
       <br />
-      {error && <p>Error: {error}</p>}
-      {logoUrl && (
+       {logoUrl && (<>
+        <p>Logo : </p>
         <img
           src={logoUrl}
           alt={`${name} Logo`}
           style={{ display: 'block', maxWidth: '200px' }}
-        />
+        /></>
       )}
     </div>
   );

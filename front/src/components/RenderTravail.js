@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 
-export default function RenderTravail(){
+export default function RenderTravail({setrender}){
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -16,6 +16,7 @@ export default function RenderTravail(){
     
           if (response.status === 200) {
             console.log('Data sent successfully');
+            setrender("CreeEquipe")
             // setrender('ListeDefis')
             // Handle success (e.g., show a success message)
           } else {

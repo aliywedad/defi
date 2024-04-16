@@ -121,7 +121,7 @@ export default function EtudiantPage({ prop }) {
                 </nav>
 
                 <div class={`content-wrapper  sm: ${x?'  ' : 'd-none'}`}>
-            {render === "RenderTravail" && <RenderTravail />}
+            {render === "RenderTravail" && <RenderTravail setrender={setrender} />}
             {render === "CreeEquipe" && <CreeEquipe />}
             {/* {render === "Etudiant" && <Etuduent />} */}
           </div>
