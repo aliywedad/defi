@@ -134,7 +134,6 @@ def list_soumissionid(request):
         affectations = AffectationJury.objects.filter(membre_jury__id=id)
         for affectation in affectations:
             liste_soumissions_ids.append(affectation.soumission_id)
-        print("***********************************************************************************************************************")
         print(liste_soumissions_ids)
         
         print("")
@@ -162,6 +161,21 @@ def list_soumission(request):
     serializer = SoumissionSerializer(soums, many=True)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def list_criterGrille(request):
+    data = json.loads(request.body)
+
+    id = request.data.get('id_defi')
+    print("****************************************************************************************************************************************************************************************************************************** id = " ,id)
+    print("****************************************************************************************************************************************************************************************************************************** id = " ,id)
+    print("****************************************************************************************************************************************************************************************************************************** id = " ,id)
+
+    # defi=Défi.objects.get(id=id)
+    # soums=GrilleEvaluation.objects.filter(defi=defi)
+ 
+    # serializer = GrilleEvaluationSerializer(soums, many=True)
+    # return Response(serializer.data)
+
 
 
 
@@ -171,7 +185,6 @@ def add_Admin(request):
     if request.method == 'POST':
         # Parse the JSON data from the request body
         data = json.loads(request.body)
-        print("lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
         print(data)
         
         # Extract the data fields from the JSON

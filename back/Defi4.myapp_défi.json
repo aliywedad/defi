@@ -1,0 +1,64 @@
+[{
+  "_id": {
+    "$oid": "661c992a78836956f8953551"
+  },
+  "id": 1,
+  "titre": "Sample Title",
+  "desc": "Sample Description",
+  "fileName": "loi2013-025-fr.pdf",
+  "filePath": "C:\\Users\\HP_Laptop\\Desktop\\S3C\\defi4\\back\\myapp\\files\\loi2013-025-fr.pdf",
+  "date_debut": {
+    "$date": "2024-04-15T00:00:00.000Z"
+  },
+  "date_fin": {
+    "$date": "2024-04-30T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "661c99f896a3863a2e0dae94"
+  },
+  "id": 2,
+  "titre": "Sample Title",
+  "desc": "Sample Description",
+  "fileName": "loi2013-025-fr.pdf",
+  "filePath": "C:\\Users\\HP_Laptop\\Desktop\\S3C\\defi4\\back\\myapp\\files\\loi2013-025-fr.pdf",
+  "date_debut": {
+    "$date": "2024-04-15T00:00:00.000Z"
+  },
+  "date_fin": {
+    "$date": "2024-04-30T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "661c9ee2400d58fdd49beab8"
+  },
+  "id": 3,
+  "titre": "Sample Title",
+  "desc": "Sample Description",
+  "fileName": "Absance.xlsx",
+  "filePath": "C:\\Users\\HP_Laptop\\Desktop\\S3C\\defi4\\back\\myapp\\files\\Absance.xlsx",
+  "date_debut": {
+    "$date": "2024-04-15T00:00:00.000Z"
+  },
+  "date_fin": {
+    "$date": "2024-04-30T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "661ce777329cb726f7ff8310"
+  },
+  "id": 4,
+  "titre": "Sample Title",
+  "desc": "Sample Description",
+  "fileName": "TP11.PY",
+  "filePath": "C:\\Users\\HP_Laptop\\Desktop\\S3C\\defi4\\back\\myapp\\files\\TP11.PY",
+  "date_debut": {
+    "$date": "2024-04-15T00:00:00.000Z"
+  },
+  "date_fin": {
+    "$date": "2024-04-30T00:00:00.000Z"
+  }
+}]

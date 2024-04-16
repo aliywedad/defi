@@ -27,6 +27,9 @@ urlpatterns = [
     path('add_critere/', views.add_critere, name='add_critere'),
     path('list_Critere/', views.list_Critere, name='list_Critere'),
     path('add_grille/', views.add_grille, name='add_grille'),
+    path('list_criterGrille/', views.list_criterGrille, name='list_criterGrille'),
+
+
     path('list_soumission/', views.list_soumission, name='list_soumission'),
     path('list_soumissionid/', views.list_soumissionid, name='list_soumissionid'),
     path('add_affectation/', views.add_affectation, name='add_affectation'),
