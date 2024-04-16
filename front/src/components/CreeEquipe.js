@@ -139,6 +139,8 @@ export default function CreeEquipe() {
                       </div>
                     ))}
                   </div>
+                  <PokemonFetcher name={formData.nomEquipe}/>
+                  
 
 
                     <div class="mt-2">
@@ -152,6 +154,47 @@ export default function CreeEquipe() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+
+
+function PokemonFetcher({ name }) {
+  const [logoUrl, setLogoUrl] = useState('');
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://logo.clearbit.com/${name}.com`);
+
+        if (!response.ok) {
+          throw new Error("Could not fetch resource");
+        }
+
+        // Assuming Clearbit API returns the logo directly
+        const logoUrl = response.url;
+        setLogoUrl(logoUrl);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchData();
+  }, [name]); // Fetch data when name changes
+
+  return (
+    <div>
+      <br />
+      {error && <p>Error: {error}</p>}
+      {logoUrl && (
+        <img
+          src={logoUrl}
+          alt={`${name} Logo`}
+          style={{ display: 'block', maxWidth: '200px' }}
+        />
+      )}
     </div>
   );
 }
