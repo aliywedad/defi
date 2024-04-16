@@ -35,6 +35,7 @@ def list_Etudiant(request):
 
 
 
+
 @api_view(['POST'])
 def auth(request):
     login = request.data.get("login")
@@ -152,7 +153,7 @@ def list_soumissionid(request):
 #         print("")
 #         soumissions = Soumission.objects.filter(id__in=liste_soumissions_ids).distinct()
 
-@api_view(['POST'])
+@api_view(['GET'])
 def list_soumission(request):
     soums=Soumission.objects.all()
     for sou in soums:
@@ -325,11 +326,30 @@ def delet_Jery(request):
     
 @api_view(['GET'])
 def list_Equipe(request):
-    equipe = Équipe.objects.all()
+    equipe = Équipe.objects.all().order_by('valider')
     serializer = ÉquipeSerializer(equipe, many=True)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def delet_Equipe(request):
+    id=request.data.get('id')
+    try:
+        equipe = Équipe.objects.get(id=id).delete()
+        return Response('200')
+    except:
+        return Response('400')
 
+@api_view(['POST'])
+def valider_Equipe(request):
+    id=request.data.get('id')
+    try:
+        equipe = Équipe.objects.get(id=id)
+        equipe.valider = True
+        equipe.save()
+        return Response('200')
+    except:
+        return Response('400')
+    
 @api_view(['POST'])
 def add_Equipe(request):
     if request.method == 'POST':
@@ -337,26 +357,36 @@ def add_Equipe(request):
         data = json.loads(request.body)
         # Extract the data fields from the JSON
         nomEquipe = data.get('nomEquipe')
-        leadID = data.get('leadID')
-        adjointID = data.get('adjointID')
-        nombreMembres = data.get('nombreMembres')
-         
+        l =  data.get('leadID_id')
+        a =  data.get('adjointID_id')
+        leadID = Etudiant.objects.get(id=l)
+        adjointID = Etudiant.objects.get(id=a)
+        
+        listmembre = data.get('listmembre')
+
         # Create and save the Etudiant object
         try:
             obj = Équipe.objects.create(
                 nomEquipe=nomEquipe,
                 leadID=leadID,
                 adjointID=adjointID,
-                nombreMembres=nombreMembres,
   
             )
+
+            for i in listmembre:
+                etudiant = Etudiant.objects.get(id=i)
+                Inscription.objects.create(
+                équipe=obj,
+                etudiant=etudiant,
+                )
+
             
             # Return a JSON response indicating success
             return Response({'message': 'equipe has created succefuly'})
         except:
             return Response({'message': 'equipe has error'})
 
-    
+
     else:
         # Return a JSON response with an error message if the request method is not POST
         return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)

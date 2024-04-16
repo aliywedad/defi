@@ -47,19 +47,13 @@ class Équipe(models.Model):
     nomEquipe = models.CharField(max_length=255)
     leadID = models.ForeignKey(Etudiant, on_delete=models.CASCADE, related_name='lead_teams')
     adjointID = models.ForeignKey(Etudiant, on_delete=models.CASCADE, related_name='adjoint_teams')
-    nombreMembres = models.IntegerField()
+    valider= models.BooleanField(default=False)
 
     def __str__(self):
         return self.nomEquipe
 class Inscription(models.Model):
-    ROLE_CHOICES = (
-        ('lead', 'Lead'),
-        ('adjoint', 'Adjoint'),
-        ('membre', 'Membre'),
-    )
-    utilisateur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+    etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE)
     équipe = models.ForeignKey(Équipe, on_delete=models.CASCADE)
-    role = models.CharField(max_length=7, choices=ROLE_CHOICES)
 
 class Défi(models.Model):
     titre = models.CharField(max_length=255)
@@ -126,6 +120,7 @@ class GrilleEvaluation(models.Model):
     def _str_(self):
         return f"{self.defi} - {self.critere} (Coefficient: {self.coefficient})"
     
+
 class EvaluationJury(models.Model):
     soumission = models.ForeignKey(Soumission, on_delete=models.CASCADE)
     membre_jury = models.ForeignKey(Jery, on_delete=models.CASCADE)
