@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Utilisateur,Etudiant,Jery,administrater,Défi,Critère,Équipe,Évaluation
+from .models import *
 
 class UtilisateurSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,7 +39,20 @@ class DéfiSerializer(serializers.ModelSerializer):
     class Meta:
         model = Défi
         fields ='__all__'
+class SoumissionSerializer(serializers.ModelSerializer):
+    titre = serializers.SerializerMethodField()
+    equipe = serializers.SerializerMethodField()
 
+    class Meta:
+        model = Soumission
+        fields = '__all__'
+
+    def get_titre(self, obj):
+        return obj.défi.titre if obj.défi else None
+    
+    def get_equipe(self, obj):
+        return obj.équipe.nomEquipe if obj.équipe else None
+    
 class ÉvaluationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Évaluation

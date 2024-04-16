@@ -47,7 +47,7 @@ def auth(request):
         if user and user.motDePasse == pwd:
             role = user.role
             # Return the role in the response
-            return Response({'role': role}, status=200)
+            return Response({'role': role,"id":user.id}, status=200)
         else:
             # If user does not exist or password does not match, return unauthorized
             return Response("Invalid credentials", status=401)
@@ -64,6 +64,14 @@ def list_Admin(request):
     serializer = administraterSerializer(admin, many=True)
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def list_Critere(request):
+    obj = Critère.objects.all()
+    serializer = CritèreSerializer(obj, many=True)
+    return Response(serializer.data)
+
+
 @api_view(['GET'])
 def list_defi(request):
     defi = Défi.objects.all()
@@ -76,89 +84,7 @@ def list_Jury(request):
     serializer = JerySerializer(jury, many=True)
     return Response(serializer.data)
 
-
-
-
-
-# @api_view(['POST'])
-# def isUser(request):
-#     email = request.data.get('email')
-#     password = request.data.get('password')
-#     if email is None or password is None:
-#         return Response({"Email or password is missing"}, status=400)
-#     try:
-#         user = User.objects.get(email=email)
-#     except User.DoesNotExist:
-#         return Response({"UserNotFound"})
-#     if user.password==password:
-#         return Response({"Successful"})
-#     else:
-#         return Response({"passwordIncorrect"})
-
-# @api_view(['POST'])
-# def verification_Email(request):
-#     email = request.data.get('email')
-#     try:
-#         user = User.objects.get(email=email)
-#     except User.DoesNotExist:
-#         return Response({"UserNotFound"})
-#     source = "aliysidahmedwedad@gmail.com"
-#     receiver = "22086@supnum.mr"
-#     subject = "Test"
-#     random_number = random.randint(100000, 999999)  # Generate a random 6-digit integer
-#     message = f"Code verification is: {random_number}"
-#     text = f"Subject: {subject}\n\n{message}"
-#     server = smtplib.SMTP("smtp.gmail.com", 587)
-#     server.starttls()
-#     server.login(source, 'penp rpuu oeym aebp')
-#     server.sendmail(source, receiver, text)
-#     server.quit()
-#     return Response({random_number})
-
-# @api_view(['POST'])
-# def resetPassword(request):
-#     email = request.data.get('email')
-#     newPassword = request.data.get('newPassword')
-#     # email = "22033@supnum.mr"
-#     # newPassword = "123456"
-#     if email is None or newPassword is None:
-#         return Response({"Email or password is missing"}, status=400)
-#     try:
-#         user = User.objects.get(email=email)
-#     except User.DoesNotExist:
-#         return Response({"UserNotFound"})
-#     if user is not None: 
-#         user.password=newPassword
-#         user.save()
-#         return Response({"done!"})
-#     else:
-#         return Response({newPassword,email,"user is null"})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# @api_view(['POST'])
-# def create_user(request):
-#     """
-#     Create a new user.
-#     """
-#     serializer = UserSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save()
-#         return Response(serializer.data, status=201)
-#     return Response(serializer.errors, status=400)
-# # @api_view(['POST'])
-
+ 
 
 @api_view(['POST'])
 def add_etudiant(request):
@@ -194,6 +120,47 @@ def add_etudiant(request):
     else:
         # Return a JSON response with an error message if the request method is not POST
         return Response({'error': 'Only POST requests are allowed for this endpoint'}, status=405)
+
+
+
+@api_view(['POST'])
+def list_soumissionid(request):
+    liste_soumissions_ids=[]
+    data = json.loads(request.body)
+
+    id = data.get('id')
+    try :
+        affectations = AffectationJury.objects.filter(membre_jury__id=id)
+        for affectation in affectations:
+            liste_soumissions_ids.append(affectation.soumission_id)
+        print("***********************************************************************************************************************")
+        print(liste_soumissions_ids)
+        
+        print("")
+        soumissions = Soumission.objects.filter(id__in=liste_soumissions_ids).distinct()
+        serializer = SoumissionSerializer(soumissions, many=True)
+        return Response(serializer.data)
+    except:
+        return Response("no data")
+    
+# affectations = AffectationJury.objects.filter(membre_jury__id=id_user)
+#         for affectation in affectations:
+#             liste_soumissions_ids.append(affectation.soumission_id)
+#         print("")
+#         print(liste_soumissions_ids)
+        
+#         print("")
+#         soumissions = Soumission.objects.filter(id__in=liste_soumissions_ids).distinct()
+
+@api_view(['POST'])
+def list_soumission(request):
+    soums=Soumission.objects.all()
+    for sou in soums:
+        print(sou.fileName)
+        print(sou.défi.titre)
+    serializer = SoumissionSerializer(soums, many=True)
+    return Response(serializer.data)
+
 
 
 
@@ -263,6 +230,66 @@ def add_Jury(request):
 
 
 
+@api_view(['POST'])
+def add_affectation(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        idSou = data.get('idSou')
+        id_jery = data.get('id_jery')
+        soum=Soumission.objects.get(id=idSou)
+        jery=Jery.objects.get(id=id_jery)
+        print(idSou,id_jery," ")
+         
+        try:
+            obj = AffectationJury.objects.create(
+                soumission=soum,
+                membre_jury=jery,  
+            )
+            
+            return Response({'message': 'jery has created succefuly'})
+        except:
+            return Response({'message': 'jery has error'})
+
+    
+
+
+
+
+
+@api_view(['POST'])
+def add_critere(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        name = data.get('name')
+        score = data.get('score')         
+        try:
+            obj = Critère.objects.create(
+                name=name,
+                score=score  
+            )
+            
+            return Response({'message': 'Critère has created succefuly'})
+        except:
+            return Response({'message': 'Critère has error'})
+
+@api_view(['POST'])
+def add_grille(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        id_critere = data.get('id_critere')
+        id_defi = data.get('id_defi')  
+
+        critere=Critère.objects.get(id=id_critere)       
+        defi=Défi.objects.get(id=id_defi)       
+        try:
+            obj = GrilleEvaluation.objects.create(
+                critere=critere,
+                defi=defi  
+            )
+            
+            return Response({'message': 'GrilleEvaluation has created succefuly'})
+        except:
+            return Response({'message': 'GrilleEvaluation has error'})
 
 
 @api_view(['POST'])
@@ -420,9 +447,16 @@ def rander(request):
     with open(file_path, 'wb+') as destination:
         for chunk in uploaded_file.chunks():
             destination.write(chunk)
+    print('\n')
+    print('\n')
+    print('\n')
+    print('\n')
     print('*************************************************************************')
     print(uploaded_file.name)
     print(file_path)
+    print('\n')
+    print('\n')
+    print('\n')
     #     équipe = models.ForeignKey(Équipe, on_delete=models.CASCADE)
     # défi = models.ForeignKey(Défi, on_delete=models.CASCADE)
     # lienGit = models.CharField(max_length=255)
@@ -437,8 +471,8 @@ def rander(request):
         status="soumis",
         lienGit=date,
         dateSoumission='2024-04-30',
-        # fileName=uploaded_file.name,
-        # filePath= file_path,
+        fileName=uploaded_file.name,
+        filePath= file_path,
         )
     print("*****************************************************************************************************************8")
     print(file_path,uploaded_file.name)

@@ -68,7 +68,7 @@ class Défi(models.Model):
     filePath = models.TextField()
     date_debut = models.DateField()
     date_fin = models.DateField()
-
+# Soumission=""
 class Soumission(models.Model):
     STATUS_CHOICES = (
         ('soumis', 'Soumis'),
@@ -79,8 +79,8 @@ class Soumission(models.Model):
     lienGit = models.CharField(max_length=255)
     dateSoumission = models.DateTimeField()
     status = models.CharField(max_length=7, choices=STATUS_CHOICES)
-    fileName = models.TextField
-    filePath = models.TextField
+    fileName = models.TextField()
+    filePath = models.TextField()
 
 class Évaluation(models.Model):
     soumission = models.ForeignKey(Soumission, on_delete=models.CASCADE)
@@ -112,20 +112,18 @@ class notes(models.Model):
     def __str__(self):
         return self.name
     
-
 class AffectationJury(models.Model):
     membre_jury = models.ForeignKey(Jery, on_delete=models.CASCADE)
-    defi = models.ForeignKey(Défi, on_delete=models.CASCADE)
+    soumission = models.ForeignKey(Soumission, on_delete=models.CASCADE)
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.membre_jury} - {self.defi}"
 
 class GrilleEvaluation(models.Model):
     defi = models.ForeignKey(Défi, on_delete=models.CASCADE)
     critere = models.ForeignKey(Critère, on_delete=models.CASCADE)
-    coefficient = models.IntegerField()
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.defi} - {self.critere} (Coefficient: {self.coefficient})"
     
 class EvaluationJury(models.Model):

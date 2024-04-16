@@ -22,6 +22,12 @@ urlpatterns = [
     path('update_jury/', views.update_jury, name='update_jury'),
     path('update_Admin/', views.update_Admin, name='update_Admin'),
     path('rander/', views.rander, name='rander'),
+    path('add_critere/', views.add_critere, name='add_critere'),
+    path('list_Critere/', views.list_Critere, name='list_Critere'),
+    path('add_grille/', views.add_grille, name='add_grille'),
+    path('list_soumission/', views.list_soumission, name='list_soumission'),
+    path('list_soumissionid/', views.list_soumissionid, name='list_soumissionid'),
+    path('add_affectation/', views.add_affectation, name='add_affectation'),
 
     path('auth/', views.auth, name='auth'),  
     # path('verifEmail/', views.verification_Email, name='verification_Email'),  
