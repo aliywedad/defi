@@ -8,7 +8,7 @@ git clone https://github.com/aliywedad/defi4.git
 
 
 
-# NB : 
+### NB : 
 La base de données de l'application est en ligne, donc il faut avoir une bonne connection pour manipuler l'application en local.
 
 *************************************( utilisateurs )************************************
